@@ -1,10 +1,11 @@
+const fb = require('../firebaseConfig');
+
 export default {
-    // async getLandingCarousel() {
-    //     try {
-    //       const response = await api.get("/landing-page/carousel/landing/");
-    //       return { ok: true, data: response.data };
-    //     } catch (error) {
-    //       return { ok: false, error };
-    //     }
-    //   },
+  fetchUserProfile({ commit, state }) {
+    fb.usersCollection.doc(state.currentUser.uid).get().then(res => {
+      commit('setUserProfile', res.data());
+    }).catch(err => {
+      console.log(err)
+    })
+  }
 }

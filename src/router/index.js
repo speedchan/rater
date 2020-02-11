@@ -7,7 +7,7 @@ import Dashboard from '@/views/Dashboard'
 import Settings from '@/views/Settings'
 
 
-Vue.use(Router)
+Vue.use(Router);
 
 const router = new Router({
   mode: 'history',
@@ -38,12 +38,12 @@ const router = new Router({
       }
     }
   ]
-})
+});
 
 
 router.beforeEach((to, from, next) => {
-  const requiresAuth = to.matched.some(x => x.meta.requiresAuth)
-  const currentUser = firebase.auth().currentUser
+  const requiresAuth = to.matched.some(x => x.meta.requiresAuth);
+  const currentUser = firebase.auth().currentUser;
 
   if (requiresAuth && !currentUser) {
     next('/login')
@@ -52,12 +52,6 @@ router.beforeEach((to, from, next) => {
   } else {
     next()
   }
-})
-// TODO Remove this
-// const router = new VueRouter({
-//   mode: 'history',
-//   base: process.env.BASE_URL,
-//   routes
-// })
+});
 
 export default router
