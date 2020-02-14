@@ -31,10 +31,9 @@ const currentUser = auth.currentUser;
 
 // Firebase collections
 const usersCollection = db.collection('users');
-const objectsCollection = db.collection('objects');
-const categoriesCollection = db.collection('categories');
-const subCategoriesCollection = db.collection('subCategories');
 const ratingsCollection = db.collection('ratings');
+const setsCollection = db.collection('sets');
+const categoriesCollection = db.collection('categories');
 const votesCollection = db.collection('votes');
 
 export {
@@ -42,9 +41,8 @@ export {
     auth,
     currentUser,
     usersCollection,
-    objectsCollection,
-    categoriesCollection,
-    subCategoriesCollection,
     ratingsCollection,
+    setsCollection,
+    categoriesCollection,
     votesCollection
 }

@@ -7,5 +7,9 @@ export default {
     }).catch(err => {
       console.log(err)
     })
+  },
+  clearUserData({ commit }) {
+    commit('setCurrentUser', null);
+    commit('setUserProfile', {});
   }
 }
