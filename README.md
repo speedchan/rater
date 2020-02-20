@@ -1,19 +1,6 @@
-# comparater_vue_firebase
+# Comparater
+Allows user to save, rate, and compare individual dishes at different locations
 
-## Project setup
-```
-npm install
-```
 
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
-
-### Compiles and minifies for production
-```
-npm run build
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+[Vue.js](https://vuejs.org/),
+[Firebase](https://firebase.google.com/)
