@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <Navigation v-if="currentUser"></Navigation>
+    <Navigation v-if="current_user"></Navigation>
     <router-view/>
   </div>
 </template>
@@ -13,7 +13,7 @@
   export default {
     components: {Navigation},
     computed: {
-      ...mapState(['currentUser'])
+      ...mapState(['current_user'])
     }
   }
 </script>

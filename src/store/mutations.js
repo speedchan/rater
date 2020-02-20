@@ -1,8 +1,8 @@
 export default {
-  setCurrentUser(state, val) {
-    state.currentUser = val
+  set_current_user(state, val) {
+    state.current_user = val
   },
-  setUserProfile(state, val) {
-    state.userProfile = val
+  set_user_profile(state, val) {
+    state.user_profile = val
   }
 }

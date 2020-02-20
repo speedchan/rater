@@ -14,8 +14,8 @@ Vue.use(Vuex);
 // Maintains user's logged-in state
 fb.auth.onAuthStateChanged(user => {
   if (user) {
-    store.commit('setCurrentUser', user);
-    store.dispatch('fetchUserProfile');
+    store.commit('set_current_user', user);
+    store.dispatch('fetch_user_profile');
   }
 });
 

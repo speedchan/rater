@@ -5,6 +5,8 @@ import firebase from 'firebase'
 import Login from '@/views/Login'
 import Dashboard from '@/views/Dashboard'
 import Settings from '@/views/Settings'
+import Register from "../views/Register";
+import ForgotPassword from "../views/ForgotPassword";
 
 
 Vue.use(Router);
@@ -20,6 +22,16 @@ const router = new Router({
       path: '/login',
       name: 'Login',
       component: Login
+    },
+    {
+      path: '/register',
+      name: 'Register',
+      component: Register
+    },
+    {
+      path: '/forgot-password',
+      name: 'ForgotPassword',
+      component: ForgotPassword
     },
     {
       path: '/dashboard',

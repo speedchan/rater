@@ -1,4 +1,4 @@
 export default {
-  currentUser: null,
-  userProfile: {}
+  current_user: null,
+  user_profile: {}
 }

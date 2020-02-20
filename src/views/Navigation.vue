@@ -6,7 +6,7 @@
                 <ul class="inline">
                     <li><router-link to="dashboard">Dashboard</router-link></li>
                     <li><router-link to="settings">Settings</router-link></li>
-                    <li><a @click="logout">logout</a></li>
+                    <li><a @click="logout">Logout</a></li>
                 </ul>
             </div>
         </section>
@@ -20,7 +20,7 @@
         methods: {
          logout() {
              fb.auth.signOut().then(() => {
-                 this.$store.dispatch('clearUserData');
+                 this.$store.dispatch('clear_user_data');
                  this.$router.push('/login');
              }).catch(err => {
                  console.log(err)
