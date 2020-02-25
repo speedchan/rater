@@ -7,6 +7,8 @@ import Dashboard from '@/views/Dashboard'
 import Settings from '@/views/Settings'
 import Register from "../views/Register";
 import ForgotPassword from "../views/ForgotPassword";
+import RatingCreate from "../views/RatingCreate";
+import RatingDetail from "../views/RatingDetail";
 
 
 Vue.use(Router);
@@ -48,6 +50,19 @@ const router = new Router({
       meta: {
         requiresAuth: true
       }
+    },
+    {
+      path: '/rating/create',
+      name: 'RatingCreate',
+      component: RatingCreate,
+      meta: {
+        requiresAuth: true
+      }
+    },
+    {
+      path: '/rating',
+      name: 'RatingDetail',
+      component: RatingDetail,
     }
   ]
 });
