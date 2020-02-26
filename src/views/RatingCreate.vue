@@ -14,7 +14,12 @@
         <option disabled value="">Please select one</option>
         <option value="food">Food</option>
       </select><br>
-        location: <input type="text" v-model="rating_data.location">
+        <br>
+        <place-autocomplete-field
+            v-model="rating_data.location"
+            placeholder="Enter an an address, zipcode, or location"
+            :api-key="google_places_api_key">
+        </place-autocomplete-field>
 
       </div>
       <div>
@@ -40,8 +45,14 @@
 
 <script>
   const fb = require('../firebaseConfig.js');
-  import VueApexCharts from 'vue-apexcharts';
+
+  import Vue from 'vue';
   import { mapState } from 'vuex';
+
+  import VueApexCharts from 'vue-apexcharts';
+  import VuePlaceAutocomplete from 'vue-place-autocomplete';
+
+  Vue.use(VuePlaceAutocomplete);
 
   export default {
     components: {
@@ -49,6 +60,7 @@
     },
     data() {
       return {
+        google_places_api_key: process.env.VUE_APP_GOOGLE_PLACES_API_KEY,
         is_performing_request: false,
         // error_message : '',
         chart_options: {
@@ -73,7 +85,7 @@
         rating_data: {
           name: '',
           category: '',
-          location: [], // Should contain 2 floats, lat & long. If array empty, take as no location is stored
+          location: '',
           taste: 5,
           texture: 5,
           portion_size: 5,
@@ -99,7 +111,7 @@
         fb.ratingsCollection.doc().set({
           name: this.rating_data.name,
           category: this.rating_data.category,
-          location: [], // TODO Update this when integrated with locations
+          location: this.rating_data.location,
           ratings: {
             taste: this.rating_data.taste,
             texture: this.rating_data.texture,

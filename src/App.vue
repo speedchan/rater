@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <Navigation v-if="current_user"></Navigation>
-    <div v-if="current_user">{{ current_user }} - {{ current_user.email }}</div>
+<!--    <div v-if="current_user">{{ current_user }} - {{ current_user.email }}</div>-->
     <router-view/>
   </div>
 </template>
@@ -13,7 +13,7 @@
   import { mapState } from 'vuex';
 
   export default {
-    components: {Navigation},
+    components: { Navigation },
     computed: {
       ...mapState(['current_user'])
     }

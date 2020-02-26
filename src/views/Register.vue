@@ -75,8 +75,7 @@
             .then(response => {
               this.$store.commit('set_current_user', response.user);
 
-              // TODO Decide if user's key is response.user.uid or display_name
-              fb.usersCollection.doc(this.sign_up_form.display_name).set({
+              fb.usersCollection.doc(response.user.uid).set({
                 display_name: this.sign_up_form.display_name,
                 full_name: this.sign_up_form.full_name,
                 country: this.sign_up_form.country
