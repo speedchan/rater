@@ -4,11 +4,61 @@
         <p>
             <router-link to="rating/create">Rate Something!</router-link>
         </p>
+
+        <table border="1">
+            <tr>
+                <td>ID</td>
+                <td>Name</td>
+                <td>Created</td>
+                <td>Location</td>
+                <td>User Display Name</td>
+                <td>User Full Name</td>
+                <td>Ratings</td>
+            </tr>
+            <tr v-for="rating in current_user_ratings">
+                <td>{{rating.id}}</td>
+                <td>{{rating.name}}</td>
+                <td>{{rating.created | format_date}}</td>
+                <td>{{rating.location}}</td>
+                <td>{{rating.user_data.display_name}}</td>
+                <td>{{rating.user_data.full_name}}</td>
+                <td>
+                    Taste: {{rating.ratings.taste}}<br>
+                    Texture: {{rating.ratings.texture}}<br>
+                    Portion Size: {{rating.ratings.portion_size}}<br>
+                    Looks: {{rating.ratings.looks}}<br>
+                    Price: {{rating.ratings.price}}<br>
+                </td>
+            </tr>
+        </table>
     </div>
 </template>
 
 <script>
-    export default {
+    const fb = require('../firebaseConfig.js');
+    // import firebase from 'firebase';
+    import moment from 'moment'
+    import {mapState} from 'vuex'
 
+    export default {
+        methods: {
+
+        },
+        computed: {
+            ...mapState({
+                current_user:'current_user',
+                current_user_profile: 'current_user_profile',
+                categories: 'categories',
+                current_user_ratings: 'current_user_ratings',
+            })
+        },
+        filters: {
+            format_date(timestamp) {
+                if (!timestamp) {
+                    return '-'
+                }
+                return moment(timestamp.toDate()).fromNow()
+            }
+        }
     }
 </script>

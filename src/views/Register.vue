@@ -23,7 +23,7 @@
 
           <label for="country">Country</label>
           <country-select v-model="sign_up_form.country" id="country" :countryName="false"
-          :removePlaceholder="true"></country-select>
+                          :removePlaceholder="true"></country-select>
 
           <label for="email2">Email</label>
           <input v-model.trim="sign_up_form.email" type="text" id="email2" placeholder="email@host.com"/>
@@ -51,8 +51,10 @@
 
 <script>
   const fb = require('../firebaseConfig.js');
+  import firebase from 'firebase';
   import Vue from 'vue'
   import vueCountryRegionSelect from 'vue-country-region-select';
+
   Vue.use(vueCountryRegionSelect);
 
   export default {
@@ -78,9 +80,12 @@
               fb.usersCollection.doc(response.user.uid).set({
                 display_name: this.sign_up_form.display_name,
                 full_name: this.sign_up_form.full_name,
-                country: this.sign_up_form.country
+                country: this.sign_up_form.country,
+                created: firebase.firestore.Timestamp.now().toDate(),
+                modified: firebase.firestore.Timestamp.now().toDate(),
+                last_login: firebase.firestore.Timestamp.now().toDate(),
               }).then(() => {
-                this.$store.dispatch('fetch_user_profile');
+                this.$store.dispatch('fetch_current_user_profile');
                 this.is_performing_request = false;
                 this.$router.push('/dashboard')
               }).catch(err => {

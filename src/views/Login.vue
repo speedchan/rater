@@ -40,6 +40,7 @@
 
 <script>
     const fb = require('../firebaseConfig.js');
+    import firebase from 'firebase';
 
     export default {
         data() {
@@ -56,8 +57,11 @@
             login() {
                 this.is_performing_request = true;
                 fb.auth.signInWithEmailAndPassword(this.login_form.email, this.login_form.password).then(response => {
+
+                    fb.usersCollection.doc(response.user.uid).update({last_login: firebase.firestore.Timestamp.now().toDate()});
+
                     this.$store.commit('set_current_user', response.user);
-                    this.$store.dispatch('fetch_user_profile');
+                    this.$store.dispatch('fetch_current_user_profile');
                     this.is_performing_request = false;
                     this.$router.push('/dashboard')
                 }).catch(err => {

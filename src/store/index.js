@@ -15,7 +15,18 @@ Vue.use(Vuex);
 fb.auth.onAuthStateChanged(user => {
   if (user) {
     store.commit('set_current_user', user);
-    store.dispatch('fetch_user_profile');
+    store.dispatch('fetch_current_user_profile');
+
+    fb.ratingsCollection.orderBy('created', 'desc').onSnapshot(queryset => {
+      let ratings_list = [];
+
+      queryset.forEach(rating_object => {
+        let rating = rating_object.data();
+        rating.id = rating_object.id;
+        ratings_list.push(rating)
+      });
+      store.commit('set_current_user_ratings', ratings_list)
+    })
   }
 });
 
