@@ -1,16 +1,22 @@
 <template>
-    <header>
-        <section>
-            <div class="col1">
-                <router-link to="dashboard"><h3>Comparater</h3></router-link>
-                <ul class="inline">
-                    <li><router-link to="dashboard">Dashboard</router-link></li>
-                    <li><router-link to="settings">Settings</router-link></li>
-                    <li><a @click="logout">Logout</a></li>
-                </ul>
-            </div>
-        </section>
-    </header>
+    <v-app-bar app color="primary" dark>
+        <v-app-bar-nav-icon></v-app-bar-nav-icon>
+        <v-toolbar-title>Comparater</v-toolbar-title>
+        <v-spacer></v-spacer>
+
+        <v-btn to="dashboard" text>
+            <span class="mr-2">Dashboard</span>
+            <v-icon>mdi-open-in-new</v-icon>
+        </v-btn>
+        <v-btn to="settings" text>
+            <span class="mr-2">Settings</span>
+            <v-icon>mdi-open-in-new</v-icon>
+        </v-btn>
+        <v-btn @click="logout" text>
+            <span class="mr-2">Logout</span>
+            <v-icon>mdi-open-in-new</v-icon>
+        </v-btn>
+    </v-app-bar>
 </template>
 
 <script>
@@ -18,14 +24,14 @@
 
     export default {
         methods: {
-         logout() {
-             fb.auth.signOut().then(() => {
-                 this.$store.dispatch('clear_current_user_data');
-                 this.$router.push('/login');
-             }).catch(err => {
-                 console.log(err)
-             })
-         }
+            logout() {
+                fb.auth.signOut().then(() => {
+                    this.$store.dispatch('clear_current_user_data');
+                    this.$router.push('/login');
+                }).catch(err => {
+                    console.log(err)
+                })
+            }
         }
     }
 </script>

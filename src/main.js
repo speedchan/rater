@@ -5,6 +5,7 @@ import router from './router'
 import store from './store'
 const fb = require('./firebaseConfig.js');
 import './assets/scss/app.scss';
+import vuetify from './plugins/vuetify';
 
 Vue.config.productionTip = false;
 
@@ -15,6 +16,7 @@ fb.auth.onAuthStateChanged(user => {
       el: '#app',
       router,
       store,
+      vuetify,
       render: h => h(App)
     })
   }
