@@ -15,8 +15,17 @@
       </div>
 
       <div v-if="votes">
-        Downvotes: {{ votes.downvoters_uid_list.length }}
-        Upvotes: {{ votes.upvoters_uid_list.length }}
+        Votes: {{ votes.upvoters_uid_list.length - votes.downvoters_uid_list.length }}
+        <br>
+        <v-btn @click="downvote" text>
+          <span class="mr-2">DOWNVOTE</span>
+          <v-icon>mdi-open-in-new</v-icon>
+        </v-btn>
+        <v-btn @click="upvote" text>
+          <span class="mr-2">UPVOTE</span>
+          <v-icon>mdi-open-in-new</v-icon>
+        </v-btn>
+
       </div>
     </div>
   </section>
@@ -24,12 +33,15 @@
 
 <script>
   const fb = require('../firebaseConfig.js');
+  import firebase from 'firebase';
+  import { mapState } from 'vuex';
 
   export default {
     data() {
       return {
         rating: null,
-        votes: null
+        votes: null,
+        vote_object_id: ''
       }
     },
     methods: {
@@ -53,7 +65,8 @@
             .get()
             .then(queryset => {
               queryset.forEach(doc => {
-                // There should only be one object, so this move is safe
+                // There should only be one object, so this forEach is safe
+                this.vote_object_id = doc.id;
                 this.votes = doc.data();
                 console.log("Get votes: ", this.votes)
               });
@@ -62,9 +75,41 @@
               console.log("Error getting votes: ", error);
             });
       },
+      upvote() {
+        // Adds user uid to upvoter's list, removes from downvoter's list
+        let vote_document = fb.votesCollection.doc(this.vote_object_id);
+        vote_document.update(
+            { upvoters_uid_list: firebase.firestore.FieldValue.arrayUnion(this.current_user.uid) }
+        ).then(response => {
+          vote_document.update(
+              { downvoters_uid_list: firebase.firestore.FieldValue.arrayRemove(this.current_user.uid) }
+          );
+          console.log("Upvoted Successfully")
+        }).catch(function(error) {
+          console.log("Error when upvoting: ", error)
+        });
+      },
+      downvote() {
+        let vote_document = fb.votesCollection.doc(this.vote_object_id);
+        vote_document.update(
+            { downvoters_uid_list: firebase.firestore.FieldValue.arrayRemove(this.current_user.uid) }
+        ).then(response => {
+          vote_document.update(
+              { upvoters_uid_list: firebase.firestore.FieldValue.arrayRemove(this.current_user.uid) }
+          );
+          console.log("Downvoted Successfully")
+        }).catch(function(error) {
+          console.log("Error when downvoting: ", error)
+        });
+      }
     },
     mounted() {
       this.get_rating_by_id()
+    },
+    computed: {
+      ...mapState({
+        current_user: 'current_user'
+      }),
     }
   }
 </script>

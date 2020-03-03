@@ -162,7 +162,7 @@
           downvoters_uid_list: [],
           rating: rating_id
         }).then(response => {
-          console.log('Votes object ' + response.id + ' created')
+          console.log('Votes object ' + response.id + ' created');
           this.is_performing_request = false;
           this.$router.push('/dashboard')
         }).catch(err => {

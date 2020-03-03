@@ -16,7 +16,9 @@
                 <td>Ratings</td>
             </tr>
             <tr v-for="rating in current_user_ratings">
-                <td>{{rating.id}}</td>
+                <td>
+                    <router-link :to="{ name: 'RatingDetail', params: { rating_id: rating.id }}">{{rating.id}}</router-link>
+                </td>
                 <td>{{rating.name}}</td>
                 <td>{{rating.created | format_date}}</td>
                 <td>{{rating.location}}</td>
@@ -35,18 +37,15 @@
 </template>
 
 <script>
-    const fb = require('../firebaseConfig.js');
+    // const fb = require('../firebaseConfig.js');
     // import firebase from 'firebase';
-    import moment from 'moment'
-    import {mapState} from 'vuex'
+    import moment from 'moment';
+    import { mapState } from 'vuex';
 
     export default {
-        methods: {
-
-        },
         computed: {
             ...mapState({
-                current_user:'current_user',
+                current_user: 'current_user',
                 current_user_profile: 'current_user_profile',
                 categories: 'categories',
                 current_user_ratings: 'current_user_ratings',
