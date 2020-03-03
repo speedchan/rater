@@ -4,11 +4,11 @@
         <v-toolbar-title>Comparater</v-toolbar-title>
         <v-spacer></v-spacer>
 
-        <v-btn to="dashboard" text>
+        <v-btn to="/dashboard" text>
             <span class="mr-2">Dashboard</span>
             <v-icon>mdi-open-in-new</v-icon>
         </v-btn>
-        <v-btn to="settings" text>
+        <v-btn to="/settings" text>
             <span class="mr-2">Settings</span>
             <v-icon>mdi-open-in-new</v-icon>
         </v-btn>

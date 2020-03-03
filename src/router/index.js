@@ -52,7 +52,7 @@ const router = new Router({
       }
     },
     {
-      path: '/rating/create',
+      path: '/ratings/create',
       name: 'RatingCreate',
       component: RatingCreate,
       meta: {
@@ -60,7 +60,7 @@ const router = new Router({
       }
     },
     {
-      path: '/rating',
+      path: '/ratings/:rating_id',
       name: 'RatingDetail',
       component: RatingDetail,
     }

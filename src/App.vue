@@ -11,14 +11,6 @@
   import Navigation from "./views/Navigation";
   import { mapState } from 'vuex';
 
-  let tempArray = [[1,2], [3,4]];
-  let newArray = [];
-  tempArray.forEach(element => {
-    newArray.push(element[0] + element[1]);
-  });
-  console.log(newArray);
-
-
   export default {
     name: 'App',
     components: { Navigation },

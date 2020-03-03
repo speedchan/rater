@@ -2,7 +2,7 @@
     <div>
         dashboard
         <p>
-            <router-link to="rating/create">Rate Something!</router-link>
+            <router-link to="ratings/create">Rate Something!</router-link>
         </p>
 
         <table border="1">
@@ -57,7 +57,8 @@
                 if (!timestamp) {
                     return '-'
                 }
-                return moment(timestamp.toDate()).fromNow()
+                return `${moment(timestamp.toDate())} (${moment(timestamp.toDate()).fromNow()})`
+
             }
         }
     }

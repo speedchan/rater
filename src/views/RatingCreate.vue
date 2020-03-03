@@ -22,13 +22,14 @@
 
       </div>
       <div>
-        <apexchart
+        <apex-chart
             type="radar"
             :height="chart_options.chart.height"
             :options="chart_options"
             :series="chart_options.series"
             ref="ratings_chart"
         />
+<!--        <radar-chart :chart_data="chartjs_options" :options="chartjs_options"></radar-chart>-->
       </div>
       <div>
         Taste: <input type="range" max="5" min="1" step="1" value="5" v-model="rating_data.taste" @change="update_chart"><br>
@@ -50,13 +51,15 @@
   import firebase from 'firebase';
 
   import VueApexCharts from 'vue-apexcharts';
+  import RadarChart from "../components/RadarChart";
   import VuePlaceAutocomplete from 'vue-place-autocomplete';
 
   Vue.use(VuePlaceAutocomplete);
 
   export default {
     components: {
-      'apexchart': VueApexCharts
+      'apex-chart': VueApexCharts,
+      'radar-chart': RadarChart,
     },
     data() {
       return {
@@ -64,10 +67,6 @@
         is_performing_request: false,
         // error_message : '',
         chart_options: {
-          series: [{
-            name: 'Rating',
-            data: [5, 5, 5, 5, 5],
-          }],
           chart: {
             height: 300,
             type: 'radar',
@@ -75,11 +74,18 @@
               show: false
             }
           },
+          series: [{
+            name: 'Rating',
+            data: [5, 5, 5, 5, 5],
+          }],
           xaxis: {
             categories: ['Taste', 'Texture', 'Portion Size', 'Looks', 'Price'],
           },
           yaxis: {
-            show: false
+            show: true,
+            // min: 1,
+            // tickAmount: 4,
+            floating: true
           }
         },
         rating_data: {
@@ -91,6 +97,15 @@
           portion_size: 5,
           looks: 5,
           price: 5,
+        },
+        chartjs_data: {
+          labels: ['Taste', 'Texture', 'Portion Size', 'Looks', 'Price'],
+          datasets: [{
+            data: [5,5,5,5,5]
+          }]
+        },
+        chartjs_options: {
+
         }
       }
     },
@@ -164,7 +179,8 @@
       })
     },
     mounted() {
-      this.rating_data.category = this.categories[0].value
+      this.rating_data.category = this.categories[0].value;
+      this.$refs.ratings_chart.updateOptions({xaxis: this.chart_options.xaxis});
     }
   }
 </script>
