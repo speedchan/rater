@@ -37,8 +37,6 @@
 </template>
 
 <script>
-    // const fb = require('../firebaseConfig.js');
-    // import firebase from 'firebase';
     import moment from 'moment';
     import { mapState } from 'vuex';
 
@@ -57,7 +55,6 @@
                     return '-'
                 }
                 return `${moment(timestamp.toDate())} (${moment(timestamp.toDate()).fromNow()})`
-
             }
         }
     }

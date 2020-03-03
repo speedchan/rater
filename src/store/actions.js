@@ -19,5 +19,4 @@ export default {
       console.log("Error getting document:", error);
     });
   },
-
 }

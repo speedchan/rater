@@ -2,13 +2,14 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import firebase from 'firebase'
 
-import Login from '@/views/Login'
-import Dashboard from '@/views/Dashboard'
-import Settings from '@/views/Settings'
+import Login from '../views/Login'
+import Dashboard from '../views/Dashboard'
+import Settings from '../views/Settings'
 import Register from "../views/Register";
 import ForgotPassword from "../views/ForgotPassword";
 import RatingCreate from "../views/RatingCreate";
 import RatingDetail from "../views/RatingDetail";
+import UserDetail from "../views/UserDetail";
 
 
 Vue.use(Router);
@@ -63,18 +64,23 @@ const router = new Router({
       path: '/ratings/:rating_id',
       name: 'RatingDetail',
       component: RatingDetail,
+    },
+    {
+      path: '/users/:user_uid',
+      name: 'UserDetail',
+      component: UserDetail
     }
   ]
 });
 
 
 router.beforeEach((to, from, next) => {
-  const requiresAuth = to.matched.some(x => x.meta.requiresAuth);
-  const currentUser = firebase.auth().currentUser;
+  const requires_auth = to.matched.some(x => x.meta.requiresAuth);
+  const current_user = firebase.auth().currentUser;
 
-  if (requiresAuth && !currentUser) {
+  if (requires_auth && !current_user) {
     next('/login')
-  } else if (requiresAuth && currentUser) {
+  } else if (requires_auth && current_user) {
     next()
   } else {
     next()

@@ -19,7 +19,8 @@
             placeholder="Enter an address, zipcode, or location"
             :api-key="google_places_api_key">
         </place-autocomplete-field>
-
+        <br>
+        <input type="text" v-model="rating_data.comment" placeholder="Additional comments here...">
       </div>
       <div>
         <apex-chart
@@ -29,7 +30,6 @@
             :series="chart_options.series"
             ref="ratings_chart"
         />
-<!--        <radar-chart :chart_data="chartjs_options" :options="chartjs_options"></radar-chart>-->
       </div>
       <div>
         Taste: <input type="range" max="5" min="1" step="1" value="5" v-model="rating_data.taste" @change="update_chart"><br>
@@ -81,17 +81,12 @@
           xaxis: {
             categories: ['Taste', 'Texture', 'Portion Size', 'Looks', 'Price'],
           },
-          yaxis: {
-            show: true,
-            // min: 1,
-            // tickAmount: 4,
-            floating: true
-          }
         },
         rating_data: {
           name: '',
           category: '',
           location: '',
+          comment: '',
           taste: 5,
           texture: 5,
           portion_size: 5,
@@ -104,9 +99,6 @@
             data: [5,5,5,5,5]
           }]
         },
-        chartjs_options: {
-
-        }
       }
     },
     methods: {
@@ -133,6 +125,7 @@
           name: this.rating_data.name,
           category: this.rating_data.category,
           location: this.rating_data.location,
+          comment: this.rating_data.comment,
           ratings: {
             taste: parseInt(this.rating_data.taste),
             texture:  parseInt(this.rating_data.texture),

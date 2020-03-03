@@ -8,6 +8,10 @@
             <span class="mr-2">Dashboard</span>
             <v-icon>mdi-open-in-new</v-icon>
         </v-btn>
+        <v-btn :to="{ name: 'UserDetail', params: { user_uid: current_user.uid }}" text>
+            <span class="mr-2">My Profile</span>
+            <v-icon>mdi-open-in-new</v-icon>
+        </v-btn>
         <v-btn to="/settings" text>
             <span class="mr-2">Settings</span>
             <v-icon>mdi-open-in-new</v-icon>
@@ -21,6 +25,7 @@
 
 <script>
     const fb = require('../firebaseConfig.js');
+    import { mapState } from 'vuex';
 
     export default {
         methods: {
@@ -32,6 +37,11 @@
                     console.log(err)
                 })
             }
+        },
+        computed: {
+            ...mapState({
+                current_user: 'current_user'
+            })
         }
     }
 </script>
