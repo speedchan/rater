@@ -1,6 +1,10 @@
 <template>
   <section>
-    <div v-if="rating">
+    <div v-if="rating && !is_edit">
+      <v-btn @click="toggle_edit_mode" text>
+        <span class="mr-2">Edit Rating</span>
+      </v-btn>
+      <br>
       {{ rating.name }} <br>
       {{rating.category}} <br>
       {{rating.user_data.display_name}} <br>
@@ -36,8 +40,15 @@
             You have downvoted this rating
           </p>
         </div>
-
       </div>
+    </div>
+
+    <div v-if="rating && is_edit">
+      <v-btn @click="toggle_edit_mode" text>
+        <span class="mr-2">Edit Rating</span>
+      </v-btn>
+      <br>
+      EDIT MODE!
     </div>
   </section>
 </template>
@@ -56,6 +67,7 @@
         has_voted: false,
         is_downvote: false,
         is_upvote: false,
+        is_edit: false,
       }
     },
     methods: {
@@ -92,33 +104,33 @@
       upvote() {
         // Adds user uid to upvoter's list, removes from downvoter's list
         let vote_document = fb.votesCollection.doc(this.vote_object_id);
-        vote_document.update(
-            { upvoters_uid_list: firebase.firestore.FieldValue.arrayUnion(this.current_user.uid) }
-        ).then(response => {
-          vote_document.update(
-              { downvoters_uid_list: firebase.firestore.FieldValue.arrayRemove(this.current_user.uid) }
-          );
-          let rating_id = this.$route.params.rating_id;
-          this.get_associated_votes_document(rating_id);
-          console.log("Upvoted Successfully")
-        }).catch(function(error) {
-          console.log("Error when upvoting: ", error)
-        });
+        vote_document.update({
+          upvoters_uid_list: firebase.firestore.FieldValue.arrayUnion(this.current_user.uid),
+          downvoters_uid_list: firebase.firestore.FieldValue.arrayRemove(this.current_user.uid)
+        })
+            .then(response => {
+              let rating_id = this.$route.params.rating_id;
+              this.get_associated_votes_document(rating_id);
+              console.log("Upvoted Successfully")
+            })
+            .catch(function(error) {
+              console.log("Error when upvoting: ", error)
+            });
       },
       downvote() {
         let vote_document = fb.votesCollection.doc(this.vote_object_id);
-        vote_document.update(
-            { downvoters_uid_list: firebase.firestore.FieldValue.arrayUnion(this.current_user.uid) }
-        ).then(response => {
-          vote_document.update(
-              { upvoters_uid_list: firebase.firestore.FieldValue.arrayRemove(this.current_user.uid) }
-          );
-          let rating_id = this.$route.params.rating_id;
-          this.get_associated_votes_document(rating_id);
-          console.log("Downvoted Successfully")
-        }).catch(function(error) {
-          console.log("Error when downvoting: ", error)
-        });
+        vote_document.update({
+          downvoters_uid_list: firebase.firestore.FieldValue.arrayUnion(this.current_user.uid),
+          upvoters_uid_list: firebase.firestore.FieldValue.arrayRemove(this.current_user.uid)
+        })
+            .then(response => {
+              let rating_id = this.$route.params.rating_id;
+              this.get_associated_votes_document(rating_id);
+              console.log("Downvoted Successfully")
+            })
+            .catch(function(error) {
+              console.log("Error when downvoting: ", error)
+            });
       },
       check_user_has_voted() {
         if (this.votes.upvoters_uid_list.includes(this.current_user.uid)) {
@@ -131,9 +143,13 @@
           this.is_downvote = true;
           this.is_upvote = false;
         }
+      },
+      toggle_edit_mode() {
+        this.is_edit = !this.is_edit;
       }
     },
     mounted() {
+      // TODO Store currently viewed rating in state, so we don't call so much
       this.get_rating_by_id()
     },
     computed: {

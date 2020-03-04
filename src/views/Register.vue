@@ -22,7 +22,7 @@
           <input v-model.trim="sign_up_form.full_name" type="text" id="full_name"/>
 
           <label for="country">Country</label>
-          <country-select v-model="sign_up_form.country" id="country" :countryName="false"
+          <country-select v-model="sign_up_form.country" id="country" :countryName="true"
                           :removePlaceholder="true"></country-select>
 
           <label for="email2">Email</label>
@@ -52,7 +52,7 @@
 <script>
   const fb = require('../firebaseConfig.js');
   import firebase from 'firebase';
-  import Vue from 'vue'
+  import Vue from 'vue';
   import vueCountryRegionSelect from 'vue-country-region-select';
 
   Vue.use(vueCountryRegionSelect);
