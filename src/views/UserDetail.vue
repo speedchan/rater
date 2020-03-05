@@ -23,7 +23,9 @@
         </tr>
         <tr v-for="rating in ratings_list">
           <td>{{rating.id}}</td>
-          <td>{{rating.name}}</td>
+          <td>
+            <router-link :to="{ name: 'RatingDetail', params: { rating_id: rating.id }}">{{rating.name}}</router-link>
+          </td>
           <td>{{rating.created | format_date}}</td>
         </tr>
       </table>

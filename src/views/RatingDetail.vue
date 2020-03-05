@@ -7,7 +7,10 @@
       <br>
       {{ rating.name }} <br>
       {{rating.category}} <br>
-      {{rating.user_data.display_name}} <br>
+      <router-link :to="{ name: 'UserDetail', params: { user_uid: rating.user_data.uid }}" text>
+        <span class="mr-2">{{rating.user_data.display_name}}</span>
+      </router-link>
+      <br>
       {{rating.user_data.full_name}} <br>
       {{rating.comment}} <br>
 
@@ -45,10 +48,34 @@
 
     <div v-if="rating && is_edit">
       <v-btn @click="toggle_edit_mode" text>
-        <span class="mr-2">Edit Rating</span>
+        <span class="mr-2">Cancel Editing</span>
       </v-btn>
       <br>
-      EDIT MODE!
+      <form @submit.prevent>
+        <div>
+          name: <input type="text" v-model="cloned_rating.name"><br>
+          category:
+          <select v-model="cloned_rating.category">
+            <option v-for="category in categories" :value="category.value">{{category.name}}</option>
+          </select><br>
+          <br>
+          <place-autocomplete-field
+              v-model="cloned_rating.location"
+              placeholder="Enter an address, zipcode, or location"
+              :api-key="google_places_api_key">
+          </place-autocomplete-field>
+          <br>
+          <input type="text" v-model="cloned_rating.comment" placeholder="Additional comments here...">
+        </div>
+        <div>
+          Taste - {{cloned_rating.ratings.taste}}: <input type="range" max="5" min="1" step="1" value="5" v-model="cloned_rating.ratings.taste"><br>
+          Texture - {{cloned_rating.ratings.texture}}: <input type="range" max="5" min="1" step="1" value="5" v-model="cloned_rating.ratings.texture"><br>
+          Portion Size - {{cloned_rating.ratings.portion_size}}: <input type="range" max="5" min="1" step="1" value="5" v-model="cloned_rating.ratings.portion_size"><br>
+          Looks - {{cloned_rating.ratings.looks}}: <input type="range" max="5" min="1" step="1" value="5" v-model="cloned_rating.ratings.looks"><br>
+          Price - {{cloned_rating.ratings.price}}: <input type="range" max="5" min="1" step="1" value="5" v-model="cloned_rating.ratings.price">
+        </div>
+        <v-btn @click="update_rating">Finish Rating!</v-btn>
+      </form>
     </div>
   </section>
 </template>
@@ -56,12 +83,18 @@
 <script>
   const fb = require('../firebaseConfig.js');
   import firebase from 'firebase';
+  import Vue from 'vue';
   import { mapState } from 'vuex';
+  import VuePlaceAutocomplete from 'vue-place-autocomplete';
+
+  Vue.use(VuePlaceAutocomplete);
 
   export default {
     data() {
       return {
+        google_places_api_key: process.env.VUE_APP_GOOGLE_PLACES_API_KEY,
         rating: null,
+        cloned_rating: null,
         votes: null,
         vote_object_id: '',
         has_voted: false,
@@ -76,7 +109,9 @@
         fb.ratingsCollection.doc(rating_id).get()
             .then(response => {
               if (response.exists) {
+                // TODO Store currently viewed rating in state to reduce amount of calls
                 this.rating = response.data();
+                this.cloned_rating = response.data();
                 console.log("Get rating by ID: ", this.rating);
                 this.get_associated_votes_document(rating_id);
               }
@@ -108,7 +143,7 @@
           upvoters_uid_list: firebase.firestore.FieldValue.arrayUnion(this.current_user.uid),
           downvoters_uid_list: firebase.firestore.FieldValue.arrayRemove(this.current_user.uid)
         })
-            .then(response => {
+            .then(() => {
               let rating_id = this.$route.params.rating_id;
               this.get_associated_votes_document(rating_id);
               console.log("Upvoted Successfully")
@@ -123,7 +158,7 @@
           downvoters_uid_list: firebase.firestore.FieldValue.arrayUnion(this.current_user.uid),
           upvoters_uid_list: firebase.firestore.FieldValue.arrayRemove(this.current_user.uid)
         })
-            .then(response => {
+            .then(() => {
               let rating_id = this.$route.params.rating_id;
               this.get_associated_votes_document(rating_id);
               console.log("Downvoted Successfully")
@@ -146,6 +181,20 @@
       },
       toggle_edit_mode() {
         this.is_edit = !this.is_edit;
+        // TODO reset get_rating_by_id values
+      },
+      update_rating() {
+        let rating_id = this.$route.params.rating_id;
+        fb.ratingsCollection.doc(rating_id).set(this.cloned_rating)
+            .then(() => {
+              // TODO Add loading
+              this.is_edit = false;
+              this.rating = this.cloned_rating;
+              console.log("Rating updated successfully!")
+            })
+            .catch(err => {
+              console.log("Error in updating rating: ", err);
+            })
       }
     },
     mounted() {
@@ -154,7 +203,8 @@
     },
     computed: {
       ...mapState({
-        current_user: 'current_user'
+        current_user: 'current_user',
+        categories: 'categories'
       }),
     },
     watch: {

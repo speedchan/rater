@@ -1,9 +1,7 @@
 <template>
     <div>
-        dashboard
-        <p>
-            <router-link to="ratings/create">Rate Something!</router-link>
-        </p>
+        <h2>Dashboard</h2>
+        <v-btn to="ratings/create">Create Rating</v-btn>
 
         <table border="1">
             <tr>
@@ -22,7 +20,11 @@
                 <td>{{rating.name}}</td>
                 <td>{{rating.created | format_date}}</td>
                 <td>{{rating.location}}</td>
-                <td>{{rating.user_data.display_name}}</td>
+                <td>
+                    <router-link :to="{ name: 'UserDetail', params: { user_uid: rating.user_data.uid }}" text>
+                        <span class="mr-2">{{rating.user_data.display_name}}</span>
+                    </router-link>
+                </td>
                 <td>{{rating.user_data.full_name}}</td>
                 <td>
                     Taste: {{rating.ratings.taste}}<br>
