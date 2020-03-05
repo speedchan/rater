@@ -47,6 +47,7 @@
     </div>
 
     <div v-if="rating && is_edit">
+      <!-- TODO Add permission checks -->
       <v-btn @click="toggle_edit_mode" text>
         <span class="mr-2">Cancel Editing</span>
       </v-btn>
