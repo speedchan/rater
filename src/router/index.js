@@ -19,7 +19,8 @@ const router = new Router({
   routes: [
     {
       path: '*',
-      redirect: '/dashboard'
+      redirect: '/'
+      // redirect: '/dashboard'
     },
     {
       path: '/login',
@@ -37,7 +38,7 @@ const router = new Router({
       component: ForgotPassword
     },
     {
-      path: '/dashboard',
+      path: '/',
       name: 'Dashboard',
       component: Dashboard,
       meta: {

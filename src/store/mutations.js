@@ -7,5 +7,8 @@ export default {
   },
   set_current_user_ratings(state, val) {
     state.current_user_ratings = val
+  },
+  set_all_ratings(state, val) {
+    state.all_ratings = val
   }
 }
