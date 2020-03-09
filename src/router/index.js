@@ -42,7 +42,8 @@ const router = new Router({
       name: 'Dashboard',
       component: Dashboard,
       meta: {
-        requiresAuth: true
+        requiresAuth: true,
+        title: "Home",
       }
     },
     {
@@ -50,7 +51,8 @@ const router = new Router({
       name: 'Settings',
       component: Settings,
       meta: {
-        requiresAuth: true
+        requiresAuth: true,
+        title: "Settings",
       }
     },
     {
@@ -58,18 +60,25 @@ const router = new Router({
       name: 'RatingCreate',
       component: RatingCreate,
       meta: {
-        requiresAuth: true
+        requiresAuth: true,
+        title: "Create Rating",
       }
     },
     {
       path: '/ratings/:rating_id',
       name: 'RatingDetail',
       component: RatingDetail,
+      meta: {
+        title: "Rating"
+      }
     },
     {
       path: '/users/:user_uid',
       name: 'UserDetail',
-      component: UserDetail
+      component: UserDetail,
+      meta: {
+        title: "User Profile"
+      }
     }
   ]
 });

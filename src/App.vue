@@ -3,9 +3,7 @@
     <Navigation v-if="current_user"></Navigation>
     <NavigationMobile v-if="current_user"></NavigationMobile>
     <v-content>
-      <v-container fluid class="bg_coral">
-        <router-view/>
-      </v-container>
+      <router-view/>
     </v-content>
   </v-app>
 </template>
@@ -20,6 +18,11 @@
     components: { Navigation, NavigationMobile },
     computed: {
       ...mapState(['current_user'])
-    }
+    },
+    watch: {
+      '$route' (to, from) {
+        document.title = "Comparater - " + to.meta.title || 'Comparater'
+      }
+    },
   };
 </script>

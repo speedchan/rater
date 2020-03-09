@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <v-container>
     <div v-if="user">
       <table >
         <tr>
@@ -30,8 +30,7 @@
         </tr>
       </table>
     </div>
-
-  </div>
+  </v-container>
 </template>
 
 <script>
