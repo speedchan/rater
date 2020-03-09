@@ -11,11 +11,6 @@ const fb = require('../firebaseConfig.js');
 
 Vue.use(Vuex);
 
-function return_current_user_rating(rating) {
-  if (rating.user_data.uid === state.current_user.uid) {
-    return rating;
-  }
-}
 
 // Maintains user's logged-in state
 fb.auth.onAuthStateChanged(user => {
@@ -32,14 +27,15 @@ fb.auth.onAuthStateChanged(user => {
         rating.id = rating_object.id;
         ratings_list.push(rating)
       });
-      console.log("all rating list", ratings_list.length);
       store.commit('set_all_ratings', ratings_list);
 
       // Filters current user's ratings and stores in state
-      let current_user_ratings_list = ratings_list.map(rating => {
-        return_current_user_rating(rating)
+      let current_user_ratings_list = ratings_list.filter(function (rating) {
+        if (rating.user_data.uid === state.current_user.uid) {
+          return rating;
+        }
       });
-      console.log("cur usr rate lsit: ", current_user_ratings_list.length);
+
       store.commit('set_current_user_ratings', current_user_ratings_list)
     })
   }

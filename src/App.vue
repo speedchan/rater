@@ -2,7 +2,9 @@
   <v-app>
     <Navigation v-if="current_user"></Navigation>
     <v-content>
-      <router-view/>
+      <v-container fluid class="bg_coral">
+        <router-view/>
+      </v-container>
     </v-content>
   </v-app>
 </template>

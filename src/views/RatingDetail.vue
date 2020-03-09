@@ -182,7 +182,6 @@
       },
       toggle_edit_mode() {
         this.is_edit = !this.is_edit;
-        // TODO reset get_rating_by_id values
       },
       update_rating() {
         let rating_id = this.$route.params.rating_id;
