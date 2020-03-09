@@ -1,7 +1,6 @@
 <template>
-    <v-layout>
-        <v-app-bar app color="bg_coral" dark class="hidden-sm-and-down">
-<!--            <v-app-bar-nav-icon></v-app-bar-nav-icon>-->
+    <v-layout class="hidden-sm-and-down">
+        <v-app-bar app color="bg_coral" dark>
             <v-toolbar-title>Comparater Desktop</v-toolbar-title>
             <v-spacer></v-spacer>
 
@@ -10,7 +9,7 @@
                 <v-icon>mdi-home</v-icon>
             </v-btn>
             <v-btn :to="{ name: 'UserDetail', params: { user_uid: current_user.uid }}" text>
-                <span class="mr-2">My Profile</span>
+                <span class="mr-2">Profile</span>
                 <v-icon>mdi-account</v-icon>
             </v-btn>
             <v-btn to="/settings" text>
@@ -20,29 +19,6 @@
             <v-btn @click="logout" text>
                 <span class="mr-2">Logout</span>
                 <v-icon>mdi-logout-variant</v-icon>
-            </v-btn>
-        </v-app-bar>
-
-        <v-app-bar app color="primary" dark class="hidden-md-and-up">
-            <v-app-bar-nav-icon></v-app-bar-nav-icon>
-            <v-toolbar-title>Comparater Mobile</v-toolbar-title>
-            <v-spacer></v-spacer>
-
-            <v-btn to="/dashboard" text>
-                <span class="mr-2">Dashboard</span>
-                <v-icon>mdi-open-in-new</v-icon>
-            </v-btn>
-            <v-btn :to="{ name: 'UserDetail', params: { user_uid: current_user.uid }}" text>
-                <span class="mr-2">My Profile</span>
-                <v-icon>mdi-open-in-new</v-icon>
-            </v-btn>
-            <v-btn to="/settings" text>
-                <span class="mr-2">Settings</span>
-                <v-icon>mdi-open-in-new</v-icon>
-            </v-btn>
-            <v-btn @click="logout" text>
-                <span class="mr-2">Logout</span>
-                <v-icon>mdi-open-in-new</v-icon>
             </v-btn>
         </v-app-bar>
     </v-layout>
@@ -103,37 +79,11 @@
     import { mapState } from 'vuex';
 
     export default {
-        // data() {
-        //     return {
-        //         dialog: false,
-        //         nav: [
-        //             {
-        //                 icon: 'home',
-        //                 text: 'Home',
-        //                 title: 'Back to Home page',
-        //                 active: true
-        //             },
-        //             {
-        //                 icon: 'info',
-        //                 text: 'About',
-        //                 title: 'About this demo',
-        //                 active: false
-        //             },
-        //             {
-        //                 icon: 'assignment_turned_in',
-        //                 text: 'Todos',
-        //                 title: 'Some stuff that needs doing',
-        //                 active: false
-        //             },
-        //             {
-        //                 icon: 'email',
-        //                 text: 'Contact',
-        //                 title: 'Our Contact info',
-        //                 active: false
-        //             }
-        //         ]
-        //     }
-        // },
+        data() {
+            return {
+                is_display_mobile_nav: false
+            }
+        },
         methods: {
             logout() {
                 fb.auth.signOut().then(() => {
@@ -142,6 +92,9 @@
                 }).catch(err => {
                     console.log(err)
                 })
+            },
+            toggle_mobile_nav_display() {
+                this.is_display_mobile_nav = !this.is_display_mobile_nav;
             }
         },
         computed: {

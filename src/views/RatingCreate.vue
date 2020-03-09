@@ -59,7 +59,7 @@
   export default {
     components: {
       'apex-chart': VueApexCharts,
-      'radar-chart': RadarChart,
+      'radar-chart': RadarChart,  // TODO Remove radar chart
     },
     data() {
       return {
