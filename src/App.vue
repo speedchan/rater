@@ -2,7 +2,7 @@
   <v-app>
     <Navigation v-if="current_user"></Navigation>
     <NavigationMobile v-if="current_user"></NavigationMobile>
-    <v-content>
+    <v-content class="bg_coral">
       <router-view/>
     </v-content>
   </v-app>

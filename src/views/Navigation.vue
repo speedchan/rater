@@ -1,6 +1,6 @@
 <template>
     <v-layout class="hidden-sm-and-down">
-        <v-app-bar app color="bg_coral" dark>
+        <v-app-bar app color="primary" dark>
             <v-toolbar-title>Comparater Desktop</v-toolbar-title>
             <v-spacer></v-spacer>
 

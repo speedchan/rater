@@ -1,24 +1,36 @@
 <template>
-    <v-container class="container_desktop bg_coral pa-6">
+    <v-container class="dashboard_container">
         <v-btn fixed dark fab bottom right color="bg_coral" to="ratings/create">
             <v-icon>mdi-playlist-plus</v-icon>
         </v-btn>
 
         <v-row>
             <v-col cols="12">
-                <v-card dark>
-                    <div class="d-flex justify-lg-space-between">
-                        <input type="text" placeholder="search name" class="text-center">
-                        <input type="text" placeholder="search category" class="text-center">
-                        <input type="text" placeholder="search whatever" class="text-center">
-                    </div>
+                <v-switch v-model="show_own_ratings" label="Display own ratings" hide-details></v-switch>
+                <v-card>
+                    <v-row justify="space-between">
+                        <v-col class="text-center" lg="4" sm="12">
+                            <v-text-field dense outlined placeholder="Filter by rating name or user name"
+                                          hide-details prepend-inner-icon="mdi-magnify"
+                                          v-model="search_name_slug"></v-text-field>
+                        </v-col>
+                        <v-col class="text-center" lg="4" sm="12">
+                            <v-select dense :items="categories" hide-details outlined placeholder="Filter by category"
+                                      v-model="search_category_slug">
+                            </v-select>
+                        </v-col>
+                        <v-col class="text-center" lg="4" sm="12">
+                            <v-btn @click="handle_search">Search</v-btn>
+                            <v-btn @click="clear_search">Clear Search</v-btn>
+                        </v-col>
+                    </v-row>
                 </v-card>
             </v-col>
         </v-row>
 
-        <v-row dense>
-            <v-col v-for="(rating, i) in all_ratings" :key="i" cols="12">
-                <v-card dark :to="{ name: 'RatingDetail', params: { rating_id: rating.id }}">
+        <v-row>
+            <v-col v-for="(rating, i) in ratings_to_display" :key="i" cols="12" sm12>
+                <v-card :to="{ name: 'RatingDetail', params: { rating_id: rating.id }}">
                     <div class="d-flex flex-no-wrap justify-space-between">
                         <div>
                             <v-card-title>
@@ -53,29 +65,6 @@
             </v-col>
         </v-row>
 
-        <!--        <v-row>-->
-        <!--            <v-col cols="12">-->
-        <!--                <v-row justify="center">-->
-        <!--                    <v-card outlined v-for="rating in all_ratings" >-->
-        <!--                        <v-card-subtitle>-->
-        <!--                                    {{rating.name}} - {{rating.id}}-->
-        <!--                        </v-card-subtitle>-->
-        <!--                        <v-card-text>-->
-        <!--                            Taste: {{rating.ratings.taste}}<br>-->
-        <!--                            Texture: {{rating.ratings.texture}}<br>-->
-        <!--                            Portion Size: {{rating.ratings.portion_size}}<br>-->
-        <!--                            Looks: {{rating.ratings.looks}}<br>-->
-        <!--                            Price: {{rating.ratings.price}}<br>-->
-        <!--                        </v-card-text>-->
-        <!--                        <v-card-actions>-->
-        <!--                                    <v-btn :to="{ name: 'RatingDetail', params: { rating_id: rating.id }}">View Details</v-btn>-->
-        <!--                                    <v-btn :to="{ name: 'UserDetail', params: { user_uid: rating.user_data.uid }}">View Profile</v-btn>-->
-        <!--                                </v-card-actions>-->
-        <!--                    </v-card>-->
-        <!--                </v-row>-->
-        <!--            </v-col>-->
-        <!--        </v-row>-->
-
     </v-container>
 </template>
 
@@ -85,21 +74,12 @@
 
     export default {
         data() {
-            return{
-                items: [
-                    {
-                        color: '#1F7087',
-                        src: 'https://cdn.vuetifyjs.com/images/cards/foster.jpg',
-                        title: 'Supermodel',
-                        artist: 'Foster the People',
-                    },
-                    {
-                        color: '#952175',
-                        src: 'https://cdn.vuetifyjs.com/images/cards/halcyon.png',
-                        title: 'Halcyon Days',
-                        artist: 'Ellie Goulding',
-                    },
-                ],
+            return {
+                search_name_slug: '',
+                search_category_slug: '',
+                is_searching: false,
+                show_own_ratings: false,
+                filtered_ratings: []
             }
         },
         computed: {
@@ -109,7 +89,59 @@
                 categories: 'categories',
                 current_user_ratings: 'current_user_ratings',
                 all_ratings: 'all_ratings'
-            })
+            }),
+            ratings_to_display() {
+                if (this.is_searching) {
+                    return this.filtered_ratings;
+                }
+                else {
+                    if (this.show_own_ratings) {
+                        return this.current_user_ratings
+                    }
+                    return this.all_ratings
+                }
+            }
+        },
+        methods: {
+            handle_search() {
+                this.is_searching = true;
+                let filtered_ratings = [];
+                let ratings_to_filter_through = this.show_own_ratings ? this.current_user_ratings : this.all_ratings;
+
+                // Check rating's name, user's name and user's display name
+                if (this.search_name_slug.toLowerCase()) {
+                    let temporary_filtered_array = [];
+                    ratings_to_filter_through.filter(rating => {
+                        if (rating.user_data.full_name.toLowerCase().includes(this.search_name_slug.toLowerCase()) ||
+                            rating.user_data.display_name.toLowerCase().includes(this.search_name_slug.toLowerCase()) ||
+                            rating.name.toLowerCase().includes(this.search_name_slug.toLowerCase())) {
+                            temporary_filtered_array.push(rating)
+                        }
+                    });
+                    filtered_ratings = filtered_ratings.concat(temporary_filtered_array)
+                }
+
+                // Check rating's category
+                if (this.search_category_slug) {
+                    let temporary_filtered_array = [];
+                    ratings_to_filter_through.filter(rating => {
+                        if (rating.category.toLowerCase().includes(this.search_category_slug.toLowerCase())) {
+                            temporary_filtered_array.push(rating)
+                        }
+                    });
+                    filtered_ratings = filtered_ratings.concat(temporary_filtered_array)
+                }
+
+                // Convert to Set and back to Array to remove duplicates
+                filtered_ratings = Array.from(new Set(filtered_ratings));
+                this.filtered_ratings = filtered_ratings;
+            },
+            clear_search() {
+                this.search_name_slug = '';
+                this.search_category_slug = '';
+                this.is_searching = false;
+                // TODO Reset displayed ratings to all_ratings
+            }
         },
         filters: {
             format_date(timestamp) {
@@ -123,7 +155,31 @@
 </script>
 
 <style scoped type="scss">
-    .container_desktop {
-        width: 50%;
+
+    /* Mobile */
+    .dashboard_container {
+        width: 100%;
     }
+    button {
+        margin: 0 0.5em 0 0.5em;
+    }
+
+    /* Tablets */
+    @media (min-width: 576px) {
+        .dashboard_container {
+            width: 100%;
+        }
+        .row {
+            margin-left: 5em;
+            margin-right: 5em;
+        }
+    }
+
+    /* Desktops and up */
+    @media (min-width: 992px) {
+        .dashboard_container {
+            width: 75%;
+        }
+    }
+
 </style>

@@ -1,6 +1,6 @@
 <template>
   <v-layout class="hidden-md-and-up">
-    <v-app-bar app color="primary" dark>
+    <v-app-bar app color="primary" dark width="100vw">
       <v-toolbar-title>Comparater Mobile</v-toolbar-title>
       <v-spacer></v-spacer>
       <v-app-bar-nav-icon @click="toggle_mobile_nav_display"></v-app-bar-nav-icon>

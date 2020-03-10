@@ -10,7 +10,7 @@ export default {
   // Constants
   categories: [
     // Categories for ratings' category field
-    {name: 'Food', value: 'food'},
-    {name: 'Food2', value: 'food2'}
+    { text: 'Food', value: 'food' },
+    { text: 'Food2', value: 'food2' }
   ],
 }

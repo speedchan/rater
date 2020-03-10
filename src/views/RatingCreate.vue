@@ -10,9 +10,8 @@
       <div>
         name: <input type="text" v-model="rating_data.name"><br>
         category:
-        <select v-model="rating_data.category">
-          <option v-for="category in categories" :value="category.value">{{category.name}}</option>
-        </select><br>
+
+        <v-select v-model="rating_data.category" :items="categories" placeholder="Select Category" outlined></v-select>
         <br>
         <place-autocomplete-field
             v-model="rating_data.location"
@@ -172,7 +171,7 @@
       })
     },
     mounted() {
-      this.rating_data.category = this.categories[0].value;
+      // this.rating_data.category = this.categories[0].value;
       this.$refs.ratings_chart.updateOptions({xaxis: this.chart_options.xaxis});
     }
   }
