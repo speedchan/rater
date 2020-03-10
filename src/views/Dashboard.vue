@@ -28,42 +28,44 @@
             </v-col>
         </v-row>
 
-        <v-row>
-            <v-col v-for="(rating, i) in ratings_to_display" :key="i" cols="12" sm12>
-                <v-card :to="{ name: 'RatingDetail', params: { rating_id: rating.id }}">
-                    <div class="d-flex flex-no-wrap justify-space-between">
-                        <div>
-                            <v-card-title>
-                                <v-tooltip right>
-                                    <template v-slot:activator="{ on }">
-                                        <span v-on="on">{{rating.name}}</span>
-                                    </template>
-                                    <span>{{rating.id}}</span>
-                                </v-tooltip>
-                            </v-card-title>
+        <!-- TODO Fix responsive Start here -->
+        <!--        <v-row>-->
+        <!--            <v-col v-for="(rating, i) in ratings_to_display" :key="i" cols="12" sm12>-->
+        <!--                <v-card :to="{ name: 'RatingDetail', params: { rating_id: rating.id }}">-->
+        <!--                    <div class="d-flex flex-no-wrap justify-space-between">-->
+        <!--                        <div>-->
+        <!--                            <v-card-title>-->
+        <!--                                <v-tooltip right>-->
+        <!--                                    <template v-slot:activator="{ on }">-->
+        <!--                                        <span v-on="on">{{rating.name}}</span>-->
+        <!--                                    </template>-->
+        <!--                                    <span>{{rating.id}}</span>-->
+        <!--                                </v-tooltip>-->
+        <!--                            </v-card-title>-->
 
-                            <v-card-subtitle>
-                                Taste: {{rating.ratings.taste}}<br>
-                                Texture: {{rating.ratings.texture}}<br>
-                                Portion Size: {{rating.ratings.portion_size}}<br>
-                                Looks: {{rating.ratings.looks}}<br>
-                                Price: {{rating.ratings.price}}<br>
-                            </v-card-subtitle>
+        <!--                            <v-card-subtitle>-->
+        <!--                                Taste: {{rating.ratings.taste}}<br>-->
+        <!--                                Texture: {{rating.ratings.texture}}<br>-->
+        <!--                                Portion Size: {{rating.ratings.portion_size}}<br>-->
+        <!--                                Looks: {{rating.ratings.looks}}<br>-->
+        <!--                                Price: {{rating.ratings.price}}<br>-->
+        <!--                            </v-card-subtitle>-->
 
-                            <v-card-actions>
-                                <v-btn :to="{ name: 'UserDetail', params: { user_uid: rating.user_data.uid }}">
-                                    View {{ rating.user_data.display_name }}'s Profile
-                                </v-btn>
-                            </v-card-actions>
-                        </div>
+        <!--                            <v-card-actions>-->
+        <!--                                <v-btn :to="{ name: 'UserDetail', params: { user_uid: rating.user_data.uid }}">-->
+        <!--                                    View {{ rating.user_data.display_name }}'s Profile-->
+        <!--                                </v-btn>-->
+        <!--                            </v-card-actions>-->
+        <!--                        </div>-->
 
-                        <v-avatar class="ma-3" size="125" tile>
-                            <v-img src="https://via.placeholder.com/5"></v-img>
-                        </v-avatar>
-                    </div>
-                </v-card>
-            </v-col>
-        </v-row>
+        <!--                        <v-avatar class="ma-3" size="125" tile>-->
+        <!--                            &lt;!&ndash;                            <v-img src="https://via.placeholder.com/5"></v-img>&ndash;&gt;-->
+        <!--                        </v-avatar>-->
+        <!--                    </div>-->
+        <!--                </v-card>-->
+        <!--            </v-col>-->
+        <!--        </v-row>-->
+        <!-- TODO Fix responsive end here -->
 
     </v-container>
 </template>
@@ -157,11 +159,13 @@
 <style scoped type="scss">
 
     /* Mobile */
-    .dashboard_container {
-        width: 100%;
-    }
-    button {
-        margin: 0 0.5em 0 0.5em;
+    @media (max-width: 575.98px) {
+        .dashboard_container {
+            width: 100vw;
+        }
+        button {
+            margin: 0 0.5em 0 0.5em;
+        }
     }
 
     /* Tablets */
