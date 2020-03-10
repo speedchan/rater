@@ -4,34 +4,16 @@
       <v-toolbar-title>Comparater Mobile</v-toolbar-title>
       <v-spacer></v-spacer>
       <v-app-bar-nav-icon @click="toggle_mobile_nav_display"></v-app-bar-nav-icon>
-
-
-      <!--      <v-btn to="/dashboard" text>-->
-      <!--        <span class="mr-2">Dashboard</span>-->
-      <!--        <v-icon>mdi-open-in-new</v-icon>-->
-      <!--      </v-btn>-->
-      <!--      <v-btn :to="{ name: 'UserDetail', params: { user_uid: current_user.uid }}" text>-->
-      <!--        <span class="mr-2">My Profile</span>-->
-      <!--        <v-icon>mdi-open-in-new</v-icon>-->
-      <!--      </v-btn>-->
-      <!--      <v-btn to="/settings" text>-->
-      <!--        <span class="mr-2">Settings</span>-->
-      <!--        <v-icon>mdi-open-in-new</v-icon>-->
-      <!--      </v-btn>-->
-      <!--      <v-btn @click="logout" text>-->
-      <!--        <span class="mr-2">Logout</span>-->
-      <!--        <v-icon>mdi-open-in-new</v-icon>-->
-      <!--      </v-btn>-->
     </v-app-bar>
 
     <v-navigation-drawer absolute temporary right v-model="is_display_mobile_nav">
       <v-list-item>
         <v-list-item-content>
           <v-list-item-title>
-            Application
+            Comparater
           </v-list-item-title>
           <v-list-item-subtitle>
-            subtext
+            Compare, rate, vote!
           </v-list-item-subtitle>
         </v-list-item-content>
       </v-list-item>

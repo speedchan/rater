@@ -1,5 +1,5 @@
 <template>
-  <section>
+  <v-container>
     <div v-if="rating && !is_edit">
       <v-btn @click="toggle_edit_mode" text>
         <span class="mr-2">Edit Rating</span>
@@ -78,7 +78,7 @@
         <v-btn @click="update_rating">Finish Rating!</v-btn>
       </form>
     </div>
-  </section>
+  </v-container>
 </template>
 
 <script>

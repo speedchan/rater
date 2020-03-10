@@ -1,5 +1,5 @@
 <template>
-  <section>
+  <v-container>
     <transition name="fade">
       <div v-if="is_performing_request" class="loading">
         <p>Loading...</p>
@@ -40,7 +40,7 @@
       </div>
       <button @click="handle_rating_creation" class="button">Finish Rating!</button>
     </form>
-  </section>
+  </v-container>
 </template>
 
 <script>

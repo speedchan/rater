@@ -1,5 +1,5 @@
 <template>
-    <section>
+    <v-container>
         <h4>Settings</h4>
         <div>
             <form @submit.prevent>
@@ -13,7 +13,7 @@
                 <button @click="update_user_profile" class="button">Update Profile</button>
             </form>
         </div>
-    </section>
+    </v-container>
 </template>
 
 <script>

@@ -1,5 +1,5 @@
 <template>
-  <div id="login">
+  <v-container id="login">
     <transition name="fade">
       <div v-if="is_performing_request" class="loading">
         <p>Loading...</p>
@@ -46,7 +46,7 @@
         </transition>
       </div>
     </section>
-  </div>
+  </v-container>
 </template>
 
 <script>
