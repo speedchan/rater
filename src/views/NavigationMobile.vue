@@ -15,7 +15,7 @@
       <v-icon>mdi-account</v-icon>
     </v-btn>
     <v-btn to="/settings" text>
-      <v-icon>mdi-account-details</v-icon>
+      <v-icon>mdi-cog</v-icon>
     </v-btn>
     <v-btn @click="logout" text>
       <v-icon>mdi-logout-variant</v-icon>
