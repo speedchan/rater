@@ -24,17 +24,6 @@
         document.title = "Comparater - " + to.meta.title || 'Comparater'
       }
     },
-    data() {
-      return {
-        is_drawer_visible: false
-      }
-    },
-    methods: {
-      toggle_drawer_visibility(value) {
-        console.log("nan-e: ", value);
-        this.is_drawer_visible = value;
-      }
-    }
   };
 </script>
 
