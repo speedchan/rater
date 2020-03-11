@@ -1,8 +1,7 @@
 <template>
   <v-app>
     <Navigation v-if="current_user"></Navigation>
-    <NavigationMobile v-if="current_user" @is_display_mobile_nav="toggle_drawer_visibility"></NavigationMobile>
-    <NavigationDrawer v-if="current_user" :is_drawer_visible="is_drawer_visible"></NavigationDrawer>
+    <NavigationMobile v-if="current_user"></NavigationMobile>
     <v-content class="bg_coral">
       <router-view/>
     </v-content>
@@ -12,12 +11,11 @@
 <script>
   import Navigation from "./views/Navigation";
   import NavigationMobile from "./views/NavigationMobile";
-  import NavigationDrawer from "./views/NavigationDrawer";
   import { mapState } from 'vuex';
 
   export default {
     name: 'App',
-    components: { Navigation, NavigationDrawer, NavigationMobile },
+    components: { Navigation, NavigationMobile },
     computed: {
       ...mapState(['current_user'])
     },
