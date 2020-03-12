@@ -89,7 +89,7 @@
                           empty-icon="mdi-heart-outline"
                           half-icon="mdi-heart-half-full"
                           full-icon="mdi-heart"
-                          half-increments="true"
+                          :half-increments="true"
                           readonly="readonly"
                           size="22"
                           color="bg_coral"

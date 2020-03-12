@@ -30,11 +30,13 @@ const auth = firebase.auth();
 const currentUser = auth.currentUser;
 
 // Firebase collections
+// TODO Change to kebabz
 const usersCollection = db.collection('users');
 const ratingsCollection = db.collection('ratings');
 const setsCollection = db.collection('sets');
 const categoriesCollection = db.collection('categories');
 const votesCollection = db.collection('votes');
+const storage_ref = firebase.storage().ref();
 
 export {
     db,
@@ -44,5 +46,6 @@ export {
     ratingsCollection,
     setsCollection,
     categoriesCollection,
-    votesCollection
+    votesCollection,
+    storage_ref
 }
