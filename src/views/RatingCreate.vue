@@ -104,7 +104,7 @@
           @change="update_chart"
         />
       </div>
-      <v-btn @click="handle_rating_creation" class="v-btn">Finish Rating!</v-btn>
+      <v-btn @click="handle_rating_creation" class="v-btn">Save</v-btn>
     </form>
   </v-container>
 </template>

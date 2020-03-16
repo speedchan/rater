@@ -77,8 +77,8 @@
 
               <v-col md="8" cols="12">
                 <v-row no-gutters class="text-center">
-                  <v-col cols="12" class="mb-2">
-                    <span class="subtitle-2">RATINGS</span>
+                  <v-col cols="12" class="mb-2 subtitle-2">
+                    RATINGS
                   </v-col>
                   <v-col cols="12">
                     <v-row no-gutters>
