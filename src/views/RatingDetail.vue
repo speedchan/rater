@@ -5,6 +5,11 @@
         <span class="mr-2">Edit Rating</span>
       </v-btn>
       <br>
+      
+        <v-avatar size="125">
+          <v-img :src="rating.picture_url" v-show="rating.picture_url"></v-img>
+        </v-avatar>
+      <br>
       {{ rating.name }} <br>
       {{rating.category}} <br>
       <router-link :to="{ name: 'UserDetail', params: { user_uid: rating.user_data.uid }}" text>
@@ -26,22 +31,14 @@
       <div v-if="votes">
         Votes: {{ votes.upvoters_uid_list.length - votes.downvoters_uid_list.length }}
         <div>
-          <v-btn @click="downvote" text>
-            <span class="mr-2">DOWNVOTE</span>
-            <v-icon>mdi-open-in-new</v-icon>
-          </v-btn>
-          <v-btn @click="upvote" text>
+          <v-btn @click="upvote" text v-show="!is_upvote">
             <span class="mr-2">UPVOTE</span>
-            <v-icon>mdi-open-in-new</v-icon>
+            <!-- <v-icon>mdi-open-in-new</v-icon> -->
           </v-btn>
-        </div>
-        <div v-if="has_voted">
-          <p v-if="is_upvote">
-            You have upvoted this rating
-          </p>
-          <p v-if="is_downvote">
-            You have downvoted this rating
-          </p>
+          <v-btn @click="remove_vote" text v-show="is_upvote">
+            <span class="mr-2">REMOVE VOTE</span>
+            <!-- <v-icon>mdi-open-in-new</v-icon> -->
+          </v-btn>
         </div>
       </div>
     </div>
@@ -57,7 +54,7 @@
           name: <input type="text" v-model="cloned_rating.name"><br>
           category:
           <select v-model="cloned_rating.category">
-            <option v-for="category in categories" :value="category.value">{{category.name}}</option>
+            <option v-for="(category, i) in categories" :value="category.value" :key="i">{{category.name}}</option>
           </select><br>
           <br>
           <place-autocomplete-field
@@ -166,6 +163,23 @@
             })
             .catch(function(error) {
               console.log("Error when downvoting: ", error)
+            });
+      },
+      remove_vote() {
+        let vote_document = fb.votesCollection.doc(this.vote_object_id);
+        vote_document.update({
+          upvoters_uid_list: firebase.firestore.FieldValue.arrayRemove(this.current_user.uid),
+          downvoters_uid_list: firebase.firestore.FieldValue.arrayRemove(this.current_user.uid)
+        })
+            .then(() => {
+              let rating_id = this.$route.params.rating_id;
+              this.get_associated_votes_document(rating_id);
+              this.is_downvote = false;
+              this.is_upvote = false;
+              console.log("Removed vote")
+            })
+            .catch(function(error) {
+              console.log("Error removing vote: ", error)
             });
       },
       check_user_has_voted() {

@@ -4,12 +4,12 @@
     <div>
       <form @submit.prevent>
         <v-avatar size="125">
-          <v-img :src="current_user_profile.profile_picture" alt="didnt have no pp"></v-img>
+          <v-img :src="current_user_profile.profile_picture" alt="Current profile picture"></v-img>
         </v-avatar>
 
         <v-avatar size="125">
           Preview
-          <v-img :src="profile_picture_url" alt="didnt have no pp2"></v-img>
+          <v-img :src="profile_picture_url" alt="New profile picture preview"></v-img>
         </v-avatar>
 
         <label for="full_name">Full Name</label>
@@ -27,7 +27,7 @@
           :countryName="true"
           :removePlaceholder="true"
         ></country-select>
-        <v-btn @click="open_image_picker">Upload image</v-btn>
+        <v-btn @click="open_image_picker">Select image</v-btn>
         <input
           type="file"
           style="display:none;"
@@ -66,6 +66,7 @@ export default {
   methods: {
     update_user_profile() {
       // Update profile picture if applicable
+      // TODO Change this to upload picture, and THEN upon click of "update", set picture to uploaded picture.
       if (this.profile_picture) {
         this.$store.dispatch("update_user_profile_picture", {
           profile_picture: this.profile_picture

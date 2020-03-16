@@ -53,7 +53,7 @@
                 <v-row no-gutters>
                   <v-col cols="12">
                     <v-avatar size="200" tile>
-                      <v-img src="https://via.placeholder.com/150"></v-img>
+                      <v-img :src="rating.picture_url ? rating.picture_url : 'https://via.placeholder.com/150'"></v-img>
                     </v-avatar>
                   </v-col>
                   <v-col cols="12" class="text-center">

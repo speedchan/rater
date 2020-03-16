@@ -49,6 +49,7 @@ export default {
   update_user_profile_picture({ commit, state }, data) {
     let profile_picture = data.profile_picture;
     let meta_data = { contentType: 'image/jpg' }
+    // TODO Change storage to profile_pictures/
     let upload_picture_task = fb.storage_ref.child('profile_pictures/' + state.current_user.uid + '.jpg').put(profile_picture, meta_data)
     // Upload image and then update user profile
     upload_picture_task.snapshot.ref.getDownloadURL().then(function (profile_picture_url) {
