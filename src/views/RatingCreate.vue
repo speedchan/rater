@@ -44,15 +44,6 @@
         <input type="text" v-model="rating_data.comment" placeholder="Additional comments here..." />
       </div>
       <div>
-        <apex-chart
-          type="radar"
-          :height="chart_options.chart.height"
-          :options="chart_options"
-          :series="chart_options.series"
-          ref="ratings_chart"
-        />
-      </div>
-      <div>
         Taste:
         <input
           type="range"
@@ -61,7 +52,6 @@
           step="1"
           value="5"
           v-model="rating_data.taste"
-          @change="update_chart"
         />
         <br />Texture:
         <input
@@ -71,7 +61,6 @@
           step="1"
           value="5"
           v-model="rating_data.texture"
-          @change="update_chart"
         />
         <br />Portion Size:
         <input
@@ -81,7 +70,6 @@
           step="1"
           value="5"
           v-model="rating_data.portion_size"
-          @change="update_chart"
         />
         <br />Looks:
         <input
@@ -91,7 +79,6 @@
           step="1"
           value="5"
           v-model="rating_data.looks"
-          @change="update_chart"
         />
         <br />Price:
         <input
@@ -101,7 +88,6 @@
           step="1"
           value="5"
           v-model="rating_data.price"
-          @change="update_chart"
         />
       </div>
       <v-btn @click="handle_rating_creation" class="v-btn">Save</v-btn>
@@ -116,18 +102,12 @@ import Vue from "vue";
 import { mapState } from "vuex";
 import firebase from "firebase";
 
-import VueApexCharts from "vue-apexcharts";
-import RadarChart from "../components/RadarChart";
 import VuePlaceAutocomplete from "vue-place-autocomplete";
 import { v1 as uuidv1 } from "uuid";
 
 Vue.use(VuePlaceAutocomplete);
 
 export default {
-  components: {
-    "apex-chart": VueApexCharts,
-    "radar-chart": RadarChart // TODO Remove radar chart
-  },
   data() {
     return {
       google_places_api_key: process.env.VUE_APP_GOOGLE_PLACES_API_KEY,
@@ -135,24 +115,6 @@ export default {
       rating_picture: null,
       is_display_rating_image: false,
       upload_image_message: '',
-      chart_options: {
-        chart: {
-          height: 300,
-          type: "radar",
-          toolbar: {
-            show: false
-          }
-        },
-        series: [
-          {
-            name: "Rating",
-            data: [5, 5, 5, 5, 5]
-          }
-        ],
-        xaxis: {
-          categories: ["Taste", "Texture", "Portion Size", "Looks", "Price"]
-        }
-      },
       rating_data: {
         name: "",
         category: "",
@@ -165,31 +127,9 @@ export default {
         price: 5,
         picture_url: ""
       },
-      chartjs_data: {
-        labels: ["Taste", "Texture", "Portion Size", "Looks", "Price"],
-        datasets: [
-          {
-            data: [5, 5, 5, 5, 5]
-          }
-        ]
-      }
     };
   },
   methods: {
-    update_chart: function() {
-      // Calling updateSeries re-renders the chart
-      this.$refs.ratings_chart.updateSeries([
-        {
-          data: [
-            parseInt(this.rating_data.taste),
-            parseInt(this.rating_data.texture),
-            parseInt(this.rating_data.portion_size),
-            parseInt(this.rating_data.looks),
-            parseInt(this.rating_data.price)
-          ]
-        }
-      ]);
-    },
     handle_rating_creation: function() {
       this.is_performing_request = true;
       this.create_rating();
@@ -307,7 +247,6 @@ export default {
   },
   mounted() {
     // this.rating_data.category = this.categories[0].value;
-    this.$refs.ratings_chart.updateOptions({ xaxis: this.chart_options.xaxis });
   }
 };
 </script>

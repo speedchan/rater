@@ -1,11 +1,17 @@
 <template>
   <v-container class="dashboard_container">
+    <!-- TODO Add permission checks -->
     <v-row>
       <v-col>
-        <v-card v-if="rating && !is_edit">
+        <v-card v-if="rating">
           <v-container class="d-flex align-center">
             <v-row no-gutters>
-              <v-col cols="12" class="text-center title text-uppercase">{{ rating.name }} Rating</v-col>
+              <v-col cols="12" class="text-center title text-uppercase">
+                <span>{{ rating.name }} Rating</span>
+                <v-btn text small color="grey" @click="is_edit=!is_edit" v-if="current_user.uid == rating.user_data.uid" class="px-0 ma-0">
+                  <v-icon>mdi-square-edit-outline</v-icon>
+                </v-btn>
+              </v-col>
               <v-col cols="12" class="text-center title subtitle-1">
               </v-col>
               <v-col cols="12" md="7">
@@ -25,16 +31,28 @@
                     <v-row no-gutters>
                       <v-col cols="12" class="mb-2 subtitle-2 text-md-left text-center">INFO</v-col>
                       <v-col cols="12" class="pt-1">
+                        <span v-if="!is_edit">
                         <v-icon class="pr-2">mdi-text-short</v-icon>
-                        {{ rating.name }}
+                          {{ rating.name }}
+                        </span>
+                        <v-text-field v-if="is_edit" v-model="cloned_rating.name" prepend-inner-icon="mdi-text-short" dense=""></v-text-field>
                       </v-col>
                       <v-col cols="12" class="pt-1">
                         <v-icon class="pr-2">mdi-shape</v-icon>
                         {{rating.category}}
                       </v-col>
                       <v-col cols="12" class="pt-1">
-                        <v-icon class="pr-2">mdi-map-marker</v-icon>
-                        {{rating.location}}
+                        <span v-if="!is_edit">
+                          <v-icon class="pr-2">mdi-map-marker</v-icon>
+                          {{rating.location}}
+                        </span>
+                        <v-select
+                          v-if="is_edit"
+                          v-model="cloned_rating.category"
+                          :items="categories"
+                          placeholder="Select Category"
+                          outlined
+                        ></v-select>
                       </v-col>
                       <v-col cols="12">
                         <v-divider class="mx-4 my-3"></v-divider>
@@ -222,99 +240,6 @@
         </v-card>
       </v-col>
     </v-row>
-
-    <!-- EDIT MODE -->
-    <div v-if="rating && is_edit">
-      <!-- TODO Add permission checks -->
-      <v-btn @click="toggle_edit_mode" text>
-        <span class="mr-2">Cancel Editing</span>
-      </v-btn>
-      <br />
-      <form @submit.prevent>
-        <div>
-          <v-avatar size="125">
-            <v-img
-              :src="cloned_rating.picture_url ? cloned_rating.picture_url : 'https://via.placeholder.com/150'"
-            ></v-img>
-          </v-avatar>
-          <br />name:
-          <input type="text" v-model="cloned_rating.name" />
-          <br />category:
-          <select v-model="cloned_rating.category">
-            <option
-              v-for="(category, i) in categories"
-              :value="category.value"
-              :key="i"
-            >{{category.name}}</option>
-          </select>
-          <br />
-          <br />
-          <place-autocomplete-field
-            v-model="cloned_rating.location"
-            placeholder="Enter an address, zipcode, or location"
-            :api-key="google_places_api_key"
-          ></place-autocomplete-field>
-          <br />
-          <input
-            type="text"
-            v-model="cloned_rating.comment"
-            placeholder="Additional comments here..."
-          />
-        </div>
-        <div>
-          Taste - {{cloned_rating.ratings.taste}}:
-          <input
-            type="range"
-            max="5"
-            min="1"
-            step="1"
-            value="5"
-            v-model="cloned_rating.ratings.taste"
-          />
-          <br />
-          Texture - {{cloned_rating.ratings.texture}}:
-          <input
-            type="range"
-            max="5"
-            min="1"
-            step="1"
-            value="5"
-            v-model="cloned_rating.ratings.texture"
-          />
-          <br />
-          Portion Size - {{cloned_rating.ratings.portion_size}}:
-          <input
-            type="range"
-            max="5"
-            min="1"
-            step="1"
-            value="5"
-            v-model="cloned_rating.ratings.portion_size"
-          />
-          <br />
-          Looks - {{cloned_rating.ratings.looks}}:
-          <input
-            type="range"
-            max="5"
-            min="1"
-            step="1"
-            value="5"
-            v-model="cloned_rating.ratings.looks"
-          />
-          <br />
-          Price - {{cloned_rating.ratings.price}}:
-          <input
-            type="range"
-            max="5"
-            min="1"
-            step="1"
-            value="5"
-            v-model="cloned_rating.ratings.price"
-          />
-        </div>
-        <v-btn @click="update_rating">Finish Rating!</v-btn>
-      </form>
-    </div>
   </v-container>
 </template>
 
@@ -373,7 +298,7 @@ export default {
           });
         })
         .catch(function(error) {
-          console.log("Error getting votes: ", error);
+          console.log("e404 Error getting votes: ", error);
         });
     },
     upvote() {
@@ -390,7 +315,7 @@ export default {
           this.get_associated_votes_document(rating_id);
         })
         .catch(function(error) {
-          console.log("Error when upvoting: ", error);
+          console.log("e400 Error when upvoting: ", error);
         });
     },
     remove_vote() {
@@ -407,7 +332,7 @@ export default {
           this.is_upvote = false;
         })
         .catch(function(error) {
-          console.log("Error removing vote: ", error);
+          console.log("e400 Error removing vote: ", error);
         });
     },
     check_user_has_voted() {
@@ -431,7 +356,7 @@ export default {
           console.log("Rating updated successfully!");
         })
         .catch(err => {
-          console.log("Error in updating rating: ", err);
+          console.log("e400 Error in updating rating: ", err);
         });
     }
   },
