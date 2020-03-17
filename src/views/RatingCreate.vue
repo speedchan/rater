@@ -214,7 +214,8 @@ export default {
           user_data: {
             uid: this.current_user.uid,
             display_name: this.current_user_profile.display_name,
-            full_name: this.current_user_profile.full_name
+            full_name: this.current_user_profile.full_name,
+            profile_picture: this.current_user_profile.profile_picture
           }
         })
         .then(response => {

@@ -56,16 +56,16 @@
                       <v-img :src="rating.picture_url ? rating.picture_url : 'https://via.placeholder.com/150'"></v-img>
                     </v-avatar>
                   </v-col>
-                  <v-col cols="12" class="text-center">
-                    <v-icon>mdi-text-short</v-icon>
+                  <v-col cols="12" class="text-center pt-2">
+                    <v-icon class="pr-2">mdi-text-short</v-icon>
                     {{rating.name ? rating.name : '-'}}
                   </v-col>
                   <v-col cols="12" class="text-center">
-                    <v-icon>mdi-shape</v-icon>
+                    <v-icon class="pr-2">mdi-shape</v-icon>
                     {{rating.category ? rating.category : '-'}}
                   </v-col>
                   <v-col cols="12" class="text-center">
-                    <v-icon>mdi-map-marker</v-icon>
+                    <v-icon class="pr-2">mdi-map-marker</v-icon>
                     {{rating.location ? rating.location : '-'}}
                   </v-col>
                 </v-row>

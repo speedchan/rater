@@ -29,3 +29,9 @@
 
 <style scoped type="text/css">
 </style>
+
+<style type="text/css">
+a {
+  text-decoration: none;
+}
+</style>

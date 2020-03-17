@@ -5,10 +5,12 @@
         <v-card v-if="rating && !is_edit">
           <v-container class="d-flex align-center">
             <v-row no-gutters>
-              <v-col cols="12" class="text-center title text-uppercase">{{ rating.category }} Rating</v-col>
-              <v-col cols="7">
+              <v-col cols="12" class="text-center title text-uppercase">{{ rating.name }} Rating</v-col>
+              <v-col cols="12" class="text-center title subtitle-1">
+              </v-col>
+              <v-col cols="12" md="7">
                 <v-row no-gutters>
-                  <v-col cols="5" class="text-center">
+                  <v-col cols="12" md="5" class="text-center">
                     <v-avatar size="250" tile>
                       <v-img
                         :src="rating.picture_url ? rating.picture_url : 'https://via.placeholder.com/150'"
@@ -16,25 +18,41 @@
                       ></v-img>
                     </v-avatar>
                   </v-col>
-                  <v-col cols="7">
+                  <v-col cols="12" class="hidden-sm-and-up">
+                    <v-divider class="mx-4 my-3"></v-divider>
+                  </v-col>
+                  <v-col cols="12" md="7">
                     <v-row no-gutters>
-                      <v-col cols="12" class="mb-2 subtitle-2">INFO</v-col>
-                      <v-col cols="12">{{ rating.name }}</v-col>
-                      <v-col cols="12">{{rating.category}}</v-col>
-                      <v-col cols="12">{{rating.location}}</v-col>
+                      <v-col cols="12" class="mb-2 subtitle-2 text-md-left text-center">INFO</v-col>
+                      <v-col cols="12" class="pt-1">
+                        <v-icon class="pr-2">mdi-text-short</v-icon>
+                        {{ rating.name }}
+                      </v-col>
+                      <v-col cols="12" class="pt-1">
+                        <v-icon class="pr-2">mdi-shape</v-icon>
+                        {{rating.category}}
+                      </v-col>
+                      <v-col cols="12" class="pt-1">
+                        <v-icon class="pr-2">mdi-map-marker</v-icon>
+                        {{rating.location}}
+                      </v-col>
                       <v-col cols="12">
                         <v-divider class="mx-4 my-3"></v-divider>
                       </v-col>
-                      <v-col cols="12" class="mb-2 subtitle-2">COMMENT</v-col>
+                      <v-col cols="12" class="mb-2 subtitle-2 text-md-left text-center">COMMENT</v-col>
                       <v-col cols="12">{{rating.comment}}</v-col>
                     </v-row>
                   </v-col>
                 </v-row>
               </v-col>
 
-              <v-col cols="5" class="pl-md-10">
+              <v-col cols="12" class="hidden-sm-and-up">
+                <v-divider class="mx-4 my-3"></v-divider>
+              </v-col>
+
+              <v-col cols="12" md="5" class="pl-md-10">
                 <v-row no-gutters>
-                  <v-col cols="12" class="mb-2 subtitle-2">RATINGS</v-col>
+                  <v-col cols="12" class="mb-2 subtitle-2 text-md-left text-center">RATINGS (Avg {{ (rating.ratings.taste + rating.ratings.texture + rating.ratings.portion_size + rating.ratings.looks + rating.ratings.price) / 5 }} <v-icon color="bg_coral">mdi-heart</v-icon>) </v-col>
                   <v-col cols="12">
                     <p class="ratings_label overline">Looks:</p>
                     <v-rating
@@ -112,23 +130,90 @@
                   </v-col>
                 </v-row>
               </v-col>
+
               <v-col cols="12">
-                        <v-divider class="mx-10 my-9"></v-divider>
-                      </v-col>
+                <v-divider class="mx-4 my-3"></v-divider>
+              </v-col>
+
               <v-col cols="12">
                 <v-row no-gutters>
-                  <v-col cols="12" class="mx-10">
-                        <!-- <div v-if="votes">
-        Votes: {{ votes.upvoters_uid_list.length - votes.downvoters_uid_list.length }}
-        <div>
-          <v-btn @click="upvote" text v-show="!is_upvote">
-            <span class="mr-2">UPVOTE</span>
-          </v-btn>
-          <v-btn @click="remove_vote" text v-show="is_upvote">
-            <span class="mr-2">REMOVE VOTE</span>
-          </v-btn>
-        </div>
-      </div> -->
+                  <v-col cols="12" md="6" class="my-3 text-md-right">
+                    <v-row no-gutters class="d-flex flex-row-reverse flex-md-row">
+                      <v-col cols="8" md="10" class="mr-xs-5">
+                        <v-row no-gutters>
+                          <v-col cols="12">
+                            <router-link
+                              :to="{ name: 'UserDetail', params: { user_uid: rating.user_data.uid }}"
+                            >
+                              <v-icon>mdi-account</v-icon>
+                              {{ rating.user_data.display_name }}
+                            </router-link>
+                          </v-col>
+                          <v-col cols="12" class="text-uppercase overline">
+                            Rated
+                            <span>{{ rating.created|format_date }}</span>
+                          </v-col>
+                          <v-col cols="12" class="text-uppercase overline">
+                            Edited
+                            <span>{{ (rating.created == rating.modified) ? (rating.modified|format_date_from_now) : '-' }}</span>
+                          </v-col>
+                        </v-row>
+                      </v-col>
+                      <v-col cols="4" md="2" class="text-md-center text-right pr-4 pr-md-0">
+                        <v-avatar size="72">
+                          <v-img
+                            :src="rating.user_data.profile_picture ? rating.user_data.profile_picture : 'https://via.placeholder.com/75'"
+                          ></v-img>
+                        </v-avatar>
+                      </v-col>
+                    </v-row>
+                  </v-col>
+
+                  <v-col cols="12" class="hidden-sm-and-up">
+                    <v-divider class="mx-4 my-3"></v-divider>
+                  </v-col>
+
+                  <v-col cols="12" md="6" class="my-3 text-md-left">
+                    <v-row no-gutters>
+                      <v-col cols="12" md="2" class="text-center">
+                        <v-btn
+                          class="mx-2"
+                          fab
+                          x-large
+                          dark
+                          @click="upvote"
+                          v-show="!is_upvote"
+                          color="grey"
+                        >
+                          <v-icon>mdi-hand-heart</v-icon>
+                        </v-btn>
+                        <v-btn
+                          class="mx-2"
+                          fab
+                          x-large
+                          dark
+                          @click="remove_vote"
+                          v-show="is_upvote"
+                          color="bg_coral"
+                        >
+                          <v-icon>mdi-hand-heart</v-icon>
+                        </v-btn>
+                      </v-col>
+                      <v-col cols="12" md="10">
+                        <v-row no-gutters v-if="votes">
+                          <v-col cols="12" class="text-center text-md-left my-md-0 mt-3">
+                            {{ votes.upvoters_uid_list.length }}
+                            <v-icon small>mdi-heart</v-icon> GIVEN
+                          </v-col>
+                          <v-col cols="12" class="text-uppercase overline text-center text-md-left">
+                            <span v-show="!is_upvote">Show some love if you've enjoyed this rating!</span>
+                            <span
+                              v-show="is_upvote"
+                            >{{ rating.user_data.display_name }} appreciates the love!</span>
+                          </v-col>
+                        </v-row>
+                      </v-col>
+                    </v-row>
                   </v-col>
                 </v-row>
               </v-col>
@@ -237,6 +322,7 @@
 const fb = require("../firebaseConfig.js");
 import firebase from "firebase";
 import Vue from "vue";
+import moment from "moment";
 import { mapState } from "vuex";
 import VuePlaceAutocomplete from "vue-place-autocomplete";
 
@@ -251,7 +337,6 @@ export default {
       votes: null,
       vote_object_id: "",
       has_voted: false,
-      is_downvote: false,
       is_upvote: false,
       is_edit: false
     };
@@ -284,7 +369,7 @@ export default {
             // There should only be one object, so this forEach is safe
             this.vote_object_id = doc.id;
             this.votes = doc.data();
-            console.log("Get votes: ", this.votes);
+            this.check_user_has_voted();
           });
         })
         .catch(function(error) {
@@ -292,14 +377,11 @@ export default {
         });
     },
     upvote() {
-      // Adds user uid to upvoter's list, removes from downvoter's list
+      // Adds user uid to upvoter's list
       let vote_document = fb.votesCollection.doc(this.vote_object_id);
       vote_document
         .update({
           upvoters_uid_list: firebase.firestore.FieldValue.arrayUnion(
-            this.current_user.uid
-          ),
-          downvoters_uid_list: firebase.firestore.FieldValue.arrayRemove(
             this.current_user.uid
           )
         })
@@ -311,40 +393,17 @@ export default {
           console.log("Error when upvoting: ", error);
         });
     },
-    downvote() {
-      let vote_document = fb.votesCollection.doc(this.vote_object_id);
-      vote_document
-        .update({
-          downvoters_uid_list: firebase.firestore.FieldValue.arrayUnion(
-            this.current_user.uid
-          ),
-          upvoters_uid_list: firebase.firestore.FieldValue.arrayRemove(
-            this.current_user.uid
-          )
-        })
-        .then(() => {
-          let rating_id = this.$route.params.rating_id;
-          this.get_associated_votes_document(rating_id);
-        })
-        .catch(function(error) {
-          console.log("Error when downvoting: ", error);
-        });
-    },
     remove_vote() {
       let vote_document = fb.votesCollection.doc(this.vote_object_id);
       vote_document
         .update({
           upvoters_uid_list: firebase.firestore.FieldValue.arrayRemove(
             this.current_user.uid
-          ),
-          downvoters_uid_list: firebase.firestore.FieldValue.arrayRemove(
-            this.current_user.uid
           )
         })
         .then(() => {
           let rating_id = this.$route.params.rating_id;
           this.get_associated_votes_document(rating_id);
-          this.is_downvote = false;
           this.is_upvote = false;
         })
         .catch(function(error) {
@@ -355,13 +414,6 @@ export default {
       if (this.votes.upvoters_uid_list.includes(this.current_user.uid)) {
         this.has_voted = true;
         this.is_upvote = true;
-        this.is_downvote = false;
-      } else if (
-        this.votes.downvoters_uid_list.includes(this.current_user.uid)
-      ) {
-        this.has_voted = true;
-        this.is_downvote = true;
-        this.is_upvote = false;
       }
     },
     toggle_edit_mode() {
@@ -399,13 +451,25 @@ export default {
         this.check_user_has_voted();
       }
     }
+  },
+  filters: {
+    format_date(timestamp) {
+      if (!timestamp) {
+        return "-";
+      }
+      return moment(timestamp.toDate()).format("D MMM YYYY");
+    },
+    format_date_from_now(timestamp) {
+      if (!timestamp) {
+        return "-";
+      }
+      return moment(timestamp.toDate()).fromNow();
+    }
   }
 };
 </script>
 
 <style scoped type="scss">
-
-
 .ratings {
   display: inline;
 }

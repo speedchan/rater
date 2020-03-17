@@ -44,6 +44,7 @@
 </template>
 
 <script>
+// TODO When update of user profile, update pprofile image as well.
 const fb = require("../firebaseConfig.js");
 import moment from "moment";
 
