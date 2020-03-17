@@ -1,7 +1,7 @@
 <template>
   <v-container class="dashboard_container">
     <v-btn fixed dark fab bottom right to="ratings/create">
-      <v-icon>mdi-playlist-plus</v-icon>
+      <v-icon>mdi-plus</v-icon>
     </v-btn>
 
     <v-row>

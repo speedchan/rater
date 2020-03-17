@@ -8,8 +8,10 @@
             <v-row no-gutters>
               <v-col cols="12" class="text-center title text-uppercase">
                 <span>{{ rating.name }} Rating</span>
+              </v-col>
+              <v-col cols="12" class="text-center">
                 <v-btn text small color="grey" @click="is_edit=!is_edit" v-if="current_user.uid == rating.user_data.uid" class="px-0 ma-0">
-                  <v-icon>mdi-square-edit-outline</v-icon>
+                  <v-icon>mdi-square-edit-outline</v-icon> <span v-text="is_edit ? 'Cancel' : 'Edit'"></span>
                 </v-btn>
               </v-col>
               <v-col cols="12" class="text-center title subtitle-1">
@@ -32,27 +34,40 @@
                       <v-col cols="12" class="mb-2 subtitle-2 text-md-left text-center">INFO</v-col>
                       <v-col cols="12" class="pt-1">
                         <span v-if="!is_edit">
-                        <v-icon class="pr-2">mdi-text-short</v-icon>
+                        <v-icon class="pr-2">mdi-cube-outline</v-icon>
                           {{ rating.name }}
                         </span>
-                        <v-text-field v-if="is_edit" v-model="cloned_rating.name" prepend-inner-icon="mdi-text-short" dense=""></v-text-field>
-                      </v-col>
-                      <v-col cols="12" class="pt-1">
-                        <v-icon class="pr-2">mdi-shape</v-icon>
-                        {{rating.category}}
+                        <v-text-field v-if="is_edit" v-model="cloned_rating.name" prepend-icon="mdi-cube-outline" dense></v-text-field>
                       </v-col>
                       <v-col cols="12" class="pt-1">
                         <span v-if="!is_edit">
-                          <v-icon class="pr-2">mdi-map-marker</v-icon>
-                          {{rating.location}}
+                          <v-icon class="pr-2">mdi-tag</v-icon>
+                          {{rating.category}}
                         </span>
                         <v-select
                           v-if="is_edit"
                           v-model="cloned_rating.category"
                           :items="categories"
                           placeholder="Select Category"
-                          outlined
+                          dense
+                          prepend-icon="mdi-tag"
                         ></v-select>
+                      </v-col>
+                      <v-col cols="12" class="pt-1">
+                        <span v-if="!is_edit">
+                          <v-icon class="pr-2">mdi-map-marker</v-icon>
+                          {{rating.location}}
+                        </span>
+                        <span v-if="is_edit">
+                          <v-icon class="mr-2">mdi-map-marker</v-icon>
+                          <place-autocomplete-field
+                          v-model="cloned_rating.location"
+                          placeholder="Enter an address, zipcode, or location"
+                          :api-key="google_places_api_key"
+                          class="location_picker"
+                        ></place-autocomplete-field>
+                        </span>
+                        
                       </v-col>
                       <v-col cols="12">
                         <v-divider class="mx-4 my-3"></v-divider>
@@ -341,9 +356,6 @@ export default {
         this.is_upvote = true;
       }
     },
-    toggle_edit_mode() {
-      this.is_edit = !this.is_edit;
-    },
     update_rating() {
       let rating_id = this.$route.params.rating_id;
       fb.ratingsCollection
@@ -398,11 +410,13 @@ export default {
 .ratings {
   display: inline;
 }
-
 .ratings_label {
   display: inline-block;
   width: 10em;
-  /* text-align: center; */
+}
+.location_picker {
+  display: inline-block;
+  width: 436px;
 }
 
 /* Mobile */

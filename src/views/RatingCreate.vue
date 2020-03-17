@@ -102,8 +102,8 @@ import Vue from "vue";
 import { mapState } from "vuex";
 import firebase from "firebase";
 
-import VuePlaceAutocomplete from "vue-place-autocomplete";
 import { v1 as uuidv1 } from "uuid";
+import VuePlaceAutocomplete from "vue-place-autocomplete";
 
 Vue.use(VuePlaceAutocomplete);
 
