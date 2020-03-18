@@ -1,13 +1,13 @@
 <template>
   <v-container class="dashboard_container">
-    <!-- TODO Add permission checks -->
+    <!-- TODO Add permission checks, sharing to social media -->
     <v-row>
       <v-col>
         <v-card v-if="rating">
           <v-container class="d-flex align-center">
             <v-row no-gutters>
               <v-col cols="12" class="text-center title text-uppercase">
-                <span>{{ rating.name }} Rating</span>
+                <span>{{ rating.name }}</span>
               </v-col>
               <v-col cols="12" class="text-center">
                 <v-btn text small color="grey" @click="is_edit=!is_edit" v-if="current_user.uid == rating.user_data.uid" class="px-0 ma-0">
@@ -39,7 +39,7 @@
                         </span>
                         <v-text-field v-if="is_edit" v-model="cloned_rating.name" prepend-icon="mdi-cube-outline" dense></v-text-field>
                       </v-col>
-                      <v-col cols="12" class="pt-1">
+                      <v-col cols="12" class="pt-1 text-capitalize">
                         <span v-if="!is_edit">
                           <v-icon class="pr-2">mdi-tag</v-icon>
                           {{rating.category}}
@@ -73,7 +73,9 @@
                         <v-divider class="mx-4 my-3"></v-divider>
                       </v-col>
                       <v-col cols="12" class="mb-2 subtitle-2 text-md-left text-center">COMMENT</v-col>
-                      <v-col cols="12">{{rating.comment}}</v-col>
+                      <v-col cols="12" class="text-left comment_mobile">
+                        {{ rating.comment }}
+                      </v-col>
                     </v-row>
                   </v-col>
                 </v-row>
@@ -85,71 +87,14 @@
 
               <v-col cols="12" md="5" class="pl-md-10">
                 <v-row no-gutters>
-                  <v-col cols="12" class="mb-2 subtitle-2 text-md-left text-center">RATINGS (Avg {{ (rating.ratings.taste + rating.ratings.texture + rating.ratings.portion_size + rating.ratings.looks + rating.ratings.price) / 5 }} <v-icon color="bg_coral">mdi-heart</v-icon>) </v-col>
-                  <v-col cols="12">
-                    <p class="ratings_label overline">Looks:</p>
-                    <v-rating
-                          :value="rating.ratings.looks"
-                          length="5"
-                          empty-icon="mdi-heart-outline"
-                          half-icon="mdi-heart-half-full"
-                          full-icon="mdi-heart"
-                          :half-increments="true"
-                          readonly="readonly"
-                          size="22"
-                          color="bg_coral"
-                          class="ratings"
-                        ></v-rating>
+                  <v-col cols="12" class="mb-2 subtitle-2 text-md-left text-center">
+                    <!-- RATINGS (Avg {{ (rating.ratings.taste + rating.ratings.texture + rating.ratings.portion_size + rating.ratings.looks + rating.ratings.price) / 5 }} <v-icon color="bg_coral">mdi-heart</v-icon>)  -->
+                    RATINGS (Avg {{ average_ratings }}<v-icon color="bg_coral">mdi-heart</v-icon>) 
                   </v-col>
-                  <v-col cols="12">
-                    <p class="ratings_label overline">Portion Size:</p>
+                  <v-col cols="12" v-for="(item, key, index) in rating.ratings" :key="index">
+                    <p class="ratings_label overline">{{ key }}</p>
                     <v-rating
-                          :value="rating.ratings.portion_size"
-                          length="5"
-                          empty-icon="mdi-heart-outline"
-                          half-icon="mdi-heart-half-full"
-                          full-icon="mdi-heart"
-                          :half-increments="true"
-                          readonly="readonly"
-                          size="22"
-                          color="bg_coral"
-                          class="ratings"
-                        ></v-rating>
-                  </v-col>
-                  <v-col cols="12">
-                    <p class="ratings_label overline">Price:</p>
-                    <v-rating
-                          :value="rating.ratings.price"
-                          length="5"
-                          empty-icon="mdi-heart-outline"
-                          half-icon="mdi-heart-half-full"
-                          full-icon="mdi-heart"
-                          :half-increments="true"
-                          readonly="readonly"
-                          size="22"
-                          color="bg_coral"
-                          class="ratings"
-                        ></v-rating>
-                  </v-col>
-                  <v-col cols="12">
-                    <p class="ratings_label overline">Taste:</p>
-                    <v-rating
-                          :value="rating.ratings.taste"
-                          length="5"
-                          empty-icon="mdi-heart-outline"
-                          half-icon="mdi-heart-half-full"
-                          full-icon="mdi-heart"
-                          :half-increments="true"
-                          readonly="readonly"
-                          size="22"
-                          color="bg_coral"
-                          class="ratings"
-                        ></v-rating>
-                  </v-col>
-                  <v-col cols="12">
-                    <p class="ratings_label overline">Texture:</p>
-                    <v-rating
-                          :value="rating.ratings.texture"
+                          :value="item"
                           length="5"
                           empty-icon="mdi-heart-outline"
                           half-icon="mdi-heart-half-full"
@@ -235,8 +180,7 @@
                       <v-col cols="12" md="10">
                         <v-row no-gutters v-if="votes">
                           <v-col cols="12" class="text-center text-md-left my-md-0 mt-3">
-                            {{ votes.upvoters_uid_list.length }}
-                            <v-icon small>mdi-heart</v-icon> GIVEN
+                            {{ votes.upvoters_uid_list.length }} {{ (votes.upvoters_uid_list.length > 1) || (votes.upvoters_uid_list.length == 0)  ? 'users': 'user' }} have said this rating was helpful
                           </v-col>
                           <v-col cols="12" class="text-uppercase overline text-center text-md-left">
                             <span v-show="!is_upvote">Show some love if you've enjoyed this rating!</span>
@@ -380,7 +324,16 @@ export default {
     ...mapState({
       current_user: "current_user",
       categories: "categories"
-    })
+    }),
+    average_ratings() {
+      let total_ratings = 0;
+      if (this.rating) {
+        Object.values(this.rating.ratings).forEach(value => {
+          total_ratings += value;
+        })
+      }
+      return (total_ratings / 5)
+    }
   },
   watch: {
     votes: function(new_value, old_value) {
@@ -417,6 +370,9 @@ export default {
 .location_picker {
   display: inline-block;
   width: 436px;
+}
+.comment_mobile {
+  width: 250px;
 }
 
 /* Mobile */

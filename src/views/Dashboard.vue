@@ -49,24 +49,14 @@
         >
           <v-container>
             <v-row no-gutters>
-              <v-col md="4" cols="12" class="text-center">
+              <v-col md="4" cols="12" class="text-center d-flex align-center">
                 <v-row no-gutters>
                   <v-col cols="12">
-                    <v-avatar size="200" tile>
-                      <v-img :src="rating.picture_url ? rating.picture_url : 'https://via.placeholder.com/150'"></v-img>
+                    <v-avatar size="300" tile>
+                      <v-img
+                        :src="rating.picture_url ? rating.picture_url : 'https://via.placeholder.com/150'"
+                      ></v-img>
                     </v-avatar>
-                  </v-col>
-                  <v-col cols="12" class="text-center pt-2">
-                    <v-icon class="pr-2">mdi-text-short</v-icon>
-                    {{rating.name ? rating.name : '-'}}
-                  </v-col>
-                  <v-col cols="12" class="text-center">
-                    <v-icon class="pr-2">mdi-shape</v-icon>
-                    {{rating.category ? rating.category : '-'}}
-                  </v-col>
-                  <v-col cols="12" class="text-center">
-                    <v-icon class="pr-2">mdi-map-marker</v-icon>
-                    {{rating.location ? rating.location : '-'}}
                   </v-col>
                 </v-row>
               </v-col>
@@ -75,15 +65,33 @@
                 <v-divider class="mx-4 my-3"></v-divider>
               </v-col>
 
-              <v-col md="8" cols="12">
-                <v-row no-gutters class="text-center">
-                  <v-col cols="12" class="mb-2 subtitle-2">
-                    RATINGS
-                  </v-col>
+              <v-col md="8" cols="12" class="px-md-12">
+                <v-row no-gutters>
                   <v-col cols="12">
                     <v-row no-gutters>
-                      <v-col cols="12">
-                        <v-rating
+                      <v-col cols="12" md="6">
+                        <v-col cols="12" class="subtitle-2 text-uppercase text-center">Info</v-col>
+                        <v-col cols="12" class="pt-1 pb-0">
+                          <v-icon class="pr-2">mdi-cube-outline</v-icon>
+                          {{rating.name ? rating.name : '-'}}
+                          <v-spacer></v-spacer>
+                        </v-col>
+                        <v-col cols="12" class="pt-1 pb-0">
+                          <v-icon class="pr-2">mdi-tag</v-icon>
+                          {{rating.category ? rating.category : '-'}}
+                        </v-col>
+                        <v-col cols="12" class="pt-1 pb-0">
+                          <v-icon class="pr-2">mdi-map-marker</v-icon>
+                          {{rating.location ? rating.location : '-'}}
+                        </v-col>
+                      </v-col>
+                      <v-col cols="12" md="6">
+                        <v-col cols="12" class="subtitle-2 text-uppercase text-center">Ratings</v-col>
+                        <v-col cols="12" class="ma-0 pa-0">
+                          <p class="ratings_label overline">
+                            Combined Average
+                          </p>
+                          <v-rating
                           :value="(rating.ratings.taste + rating.ratings.texture + rating.ratings.portion_size + rating.ratings.looks + rating.ratings.price) / 5"
                           length="5"
                           empty-icon="mdi-heart-outline"
@@ -93,19 +101,22 @@
                           readonly="readonly"
                           size="22"
                           color="bg_coral"
-                        ></v-rating>
-                        <!-- <v-rating></v-rating> -->
+                          class="ratings"
+                          ></v-rating>
+                          <!-- <v-rating></v-rating> -->
+                        </v-col>
                       </v-col>
-                      <v-col cols="12" class="mb-2 overline">Combined Average</v-col>
                     </v-row>
                   </v-col>
                   <v-col cols="12">
                     <v-divider class="mx-4 my-3"></v-divider>
                   </v-col>
-                  <v-col cols="12" class="mb-2">
-                    <span class="subtitle-2">COMMENT</span>
-                  </v-col>
-                  <v-col cols="12" sm="12" v-text="rating.comment ? rating.comment : '-'"></v-col>
+                  <v-col cols="12" class="subtitle-2 text-uppercase text-center">Comment</v-col>
+                  <v-col
+                    cols="12"
+                    sm="12"
+                    class="text-left px-md"
+                  >{{ rating.comment ? rating.comment : '-' }}</v-col>
                   <v-divider class="mx-4 my-3"></v-divider>
                   <v-col cols="12" sm="12" class="text-center">
                     Created {{ rating.created|format_date }} by
@@ -148,7 +159,7 @@ export default {
       search_category_slug: "",
       is_searching: false,
       show_own_ratings: false,
-      filtered_ratings: [],
+      filtered_ratings: []
     };
   },
   computed: {
@@ -236,15 +247,21 @@ export default {
 </script>
 
 <style scoped type="scss">
-
+.ratings_label {
+  display: inline-block;
+  width: 13em;
+}
+.ratings {
+  display: inline;
+}
 /* Mobile */
 @media (max-width: 575.98px) {
   .dashboard_container {
     width: 100vw;
   }
   .view_more {
-  text-align: center;
-}
+    text-align: center;
+  }
 }
 
 /* Tablets */

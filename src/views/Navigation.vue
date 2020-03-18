@@ -1,6 +1,10 @@
 <template>
-    <v-app-bar app color="primary" dark class="hidden-sm-and-down">
-        <v-toolbar-title>Comparater</v-toolbar-title>
+    <v-app-bar app dark class="hidden-sm-and-down">
+        <v-toolbar-title>
+        <v-btn to="/dashboard" text color="bg_coral" class="app_title">
+            <span class="mr-2">Comparater</span>
+        </v-btn>
+        </v-toolbar-title>
         <v-spacer></v-spacer>
 
         <v-btn to="/dashboard" text>
@@ -52,3 +56,12 @@
         }
     }
 </script>
+
+<style lang="scss">
+.app_title {
+    ::before {
+        background-color: transparent;
+    }
+    .v-ripple__animation{ display: none; }
+}
+</style>
