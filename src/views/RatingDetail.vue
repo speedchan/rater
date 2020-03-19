@@ -14,15 +14,12 @@
                   <v-icon>mdi-square-edit-outline</v-icon> <span v-text="is_edit ? 'Cancel' : 'Edit'"></span>
                 </v-btn>
               </v-col>
-              <v-col cols="12" class="text-center title subtitle-1">
-              </v-col>
               <v-col cols="12" md="7">
                 <v-row no-gutters>
                   <v-col cols="12" md="5" class="text-center">
                     <v-avatar size="250" tile>
                       <v-img
                         :src="rating.picture_url ? rating.picture_url : 'https://via.placeholder.com/150'"
-                        v-show="rating.picture_url"
                       ></v-img>
                     </v-avatar>
                   </v-col>
@@ -354,6 +351,10 @@ export default {
         return "-";
       }
       return moment(timestamp.toDate()).fromNow();
+    },
+    format_rating_name(rating_name) {
+
+      return str.replace(/_/g, ' ');
     }
   }
 };
