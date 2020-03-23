@@ -7,6 +7,7 @@
       max-width="36"
       contain
     ></v-img>
+    <span>r8r</span>
     <v-spacer></v-spacer>
     <v-btn to="/dashboard" text>
       <v-icon>mdi-home</v-icon>

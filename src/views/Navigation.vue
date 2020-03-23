@@ -2,7 +2,7 @@
     <v-app-bar app dark class="hidden-sm-and-down">
         <v-toolbar-title>
         <v-btn to="/dashboard" text color="bg_coral" class="app_title">
-            <span class="mr-2">Comparater</span>
+            <span class="mr-2">r8r</span>
         </v-btn>
         </v-toolbar-title>
         <v-spacer></v-spacer>

@@ -8,22 +8,9 @@
               <v-col cols="12" class="text-center title text-uppercase">
                 <span>{{ user.display_name }}</span>
               </v-col>
-              <v-col cols="12" class="text-center">
-                <v-btn
-                  text
-                  small
-                  color="grey"
-                  @click="is_edit=!is_edit"
-                  v-if="current_user.uid == $route.params.user_uid"
-                  class="px-0 ma-0"
-                >
-                  <v-icon>mdi-square-edit-outline</v-icon>
-                  <span v-text="is_edit ? 'Cancel' : 'Edit'"></span>
-                </v-btn>
-              </v-col>
-              <v-col cols="12" md="7">
+              <v-col cols="12">
                 <v-row no-gutters>
-                  <v-col cols="12" md="5" class="text-center">
+                  <v-col cols="12" md="6" class="text-md-right text-center pr-md-7">
                     <v-avatar size="250" tile>
                       <v-img
                         :src="user.profile_picture ? user.profile_picture : 'https://via.placeholder.com/150'"
@@ -33,67 +20,28 @@
                   <v-col cols="12" class="hidden-sm-and-up">
                     <v-divider class="mx-4 my-3"></v-divider>
                   </v-col>
-                  <v-col cols="12" md="7">
+                  <v-col cols="12" md="6" class="pl-md-7">
                     <v-row no-gutters>
                       <v-col cols="12" class="mb-2 subtitle-2 text-md-left text-center">INFO</v-col>
-                      <v-col cols="12" class="pt-1">
-                        <span v-if="!is_edit">
-                          <v-icon class="pr-2">mdi-cube-outline</v-icon>
-                          {{ user.display_name }}
-                        </span>
-                        <!-- <v-text-field v-if="is_edit" v-model="cloned_rating.name" prepend-icon="mdi-cube-outline" dense></v-text-field> -->
-                      </v-col>
                       <v-col cols="12" class="pt-1 text-capitalize">
-                        <span v-if="!is_edit">
-                          <v-icon class="pr-2">mdi-tag</v-icon>
+                        <span>
+                          <v-icon class="pr-2">mdi-face</v-icon>
                           {{user.full_name}}
                         </span>
-                        <!-- <v-select
-                          v-if="is_edit"
-                          v-model="cloned_rating.category"
-                          :items="categories"
-                          placeholder="Select Category"
-                          dense
-                          prepend-icon="mdi-tag"
-                        ></v-select>-->
                       </v-col>
                       <v-col cols="12" class="pt-1">
-                        <span v-if="!is_edit">
+                        <span>
+                          <v-icon class="pr-2">mdi-domino-mask</v-icon>
+                          {{ user.display_name }}
+                        </span>
+                      </v-col>
+                      <v-col cols="12" class="pt-1">
+                        <span>
                           <v-icon class="pr-2">mdi-map-marker</v-icon>
                           {{user.country}}
                         </span>
-                        <!-- <span v-if="is_edit">
-                          <v-icon class="mr-2">mdi-map-marker</v-icon>
-                          <place-autocomplete-field
-                          v-model="cloned_rating.location"
-                          placeholder="Enter an address, zipcode, or location"
-                          :api-key="google_places_api_key"
-                          class="location_picker"
-                        ></place-autocomplete-field>
-                        </span>-->
                       </v-col>
-                      <v-col cols="12">
-                        <v-divider class="mx-4 my-3"></v-divider>
-                      </v-col>
-                      <v-col cols="12" class="mb-2 subtitle-2 text-md-left text-center">COMMENT</v-col>
-                      <v-col cols="12" class="text-left comment_mobile">aloha state</v-col>
                     </v-row>
-                  </v-col>
-                </v-row>
-              </v-col>
-
-              <v-col cols="12" class="hidden-sm-and-up">
-                <v-divider class="mx-4 my-3"></v-divider>
-              </v-col>
-
-              <v-col cols="12" md="5" class="pl-md-10">
-                <v-row no-gutters>
-                  <v-col cols="12" class="mb-2 subtitle-2 text-md-left text-center">
-                    RATINGS (Avg}
-                    <v-icon color="bg_coral">mdi-heart</v-icon>)
-                  </v-col>
-                  <v-col cols="12">
-                    <p class="ratings_label overline">asdf1234</p>
                   </v-col>
                 </v-row>
               </v-col>
@@ -111,6 +59,7 @@
                           <v-col cols="12">
                             <v-btn color="bg_coral" @click="handle_show_user_ratings" :loading="show_user_ratings && loading_user_ratings" 
                             :disabled="show_user_ratings && !loading_user_ratings" :dark="!ratings_loaded" width="250px" id="load_ratings_button">
+                            <v-icon class="mr-2">mdi-counter</v-icon>
                               <span v-if="ratings_loaded && show_user_ratings">{{ ratings_list.length }} Ratings Loaded</span>
                               <span v-if="!ratings_loaded">Load User's Ratings</span>
                               </v-btn>
@@ -153,7 +102,6 @@ export default {
     return {
       user: null,
       ratings_list: [],
-      is_edit: false,
       show_user_ratings: false,
       loading_user_ratings: false,
       ratings_loaded: false
@@ -198,12 +146,14 @@ export default {
   },
   mounted() {
     this.get_user_by_id();
-    // this.get_ratings_list_by_user_id();
   },
   computed: {
     ...mapState({
       current_user: "current_user"
-    })
+    }),
+    amount_of_ratings() {
+      return this.ratings_list.length
+    }
   },
   filters: {
     format_date(timestamp) {
