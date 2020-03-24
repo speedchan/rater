@@ -151,6 +151,7 @@ export default {
             looks: parseInt(this.rating_data.looks),
             price: parseInt(this.rating_data.price)
           },
+          average_rating: (parseInt(this.rating_data.taste) + parseInt(this.rating_data.texture) + parseInt(this.rating_data.portion_size) + parseInt(this.rating_data.looks) + parseInt(this.rating_data.price)) / 5,
           user_data: {
             uid: this.current_user.uid,
             display_name: this.current_user_profile.display_name,

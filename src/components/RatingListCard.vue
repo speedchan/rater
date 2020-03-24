@@ -29,7 +29,7 @@
                     {{rating.name ? rating.name : '-'}}
                     <v-spacer></v-spacer>
                   </v-col>
-                  <v-col cols="12" class="pt-1 pb-0">
+                  <v-col cols="12" class="pt-1 pb-0 text-capitalize">
                     <v-icon class="pr-2">mdi-tag</v-icon>
                     {{rating.category ? rating.category : '-'}}
                   </v-col>
