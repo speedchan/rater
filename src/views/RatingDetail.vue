@@ -433,7 +433,7 @@ export default {
       this.update_rating();
     },
     update_rating() {
-      this.cloned_rating.modified = firebase.firestore.Timestamp.now().toDate()
+      this.cloned_rating.modified = firebase.firestore.Timestamp.now()
       fb.ratingsCollection.doc(this.$route.params.rating_id).update(this.cloned_rating)
       .then(rating => {
         this.rating = this.cloned_rating;
@@ -486,7 +486,7 @@ export default {
       if (!timestamp) {
         return "-";
       }
-      return moment(timestamp.toDate()).format("D MMM YYYY");
+      return moment(timestamp.toDate()).fromNow();
     },
   }
 };
