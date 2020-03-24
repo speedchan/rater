@@ -433,7 +433,9 @@ export default {
       this.update_rating();
     },
     update_rating() {
-      this.cloned_rating.modified = firebase.firestore.Timestamp.now()
+      this.cloned_rating.modified = firebase.firestore.Timestamp.now();
+      this.cloned_rating.average_rating = Object.values(this.cloned_rating.ratings).reduce((a, b) => a + b, 0) / 5;
+      
       fb.ratingsCollection.doc(this.$route.params.rating_id).update(this.cloned_rating)
       .then(rating => {
         this.rating = this.cloned_rating;
