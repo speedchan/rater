@@ -388,7 +388,6 @@ export default {
     upload_rating_picture() {
       // TODO Enforce this flow upon creation/update of images
       // User selects image (No preview, but text says "xxx.jpg selected"), user clicks upload image, if image upload successful, get URL from db, preview image
-      console.log("Upload rating picture called");
       let meta_data = { contentType: "image/jpg" };
       let upload_task = fb.storage_ref
         .child(`rating_pictures/${this.current_user.uid}/${uuidv1()}.jpg`)
@@ -400,7 +399,7 @@ export default {
         },
         error => {
           console.log("e400 Error in uploading image", error);
-              this.upload_image_message = 'Error in uploading image. Please try again.';
+          this.upload_image_message = 'Error in uploading image. Please try again.';
         },
         () => {
           upload_task.snapshot.ref
