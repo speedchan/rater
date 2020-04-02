@@ -49,6 +49,7 @@
                       dense
                       class="text_fields"
                       v-model="current_user_profile.full_name"
+                      autofocus
                     ></v-text-field>
                   </v-col>
                   <v-col cols="12" class="pt-1 text-capitalize">
@@ -174,7 +175,23 @@ export default {
   width: 450px;
 }
 .country_selector {
+  width: 330px;
+  height: 30px;
+  padding: 5px;
+  border-bottom: 1px solid grey;
+}
+
+
+/* Tablets */
+@media (min-width: 576px) {
+  .dashboard_container {
+    width: 100%;
+  }
+.country_selector {
   width: 425px;
   height: 30px;
+  padding: 5px;
+  border-bottom: 1px solid grey;
+}
 }
 </style>

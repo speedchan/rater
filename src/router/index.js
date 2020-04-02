@@ -25,7 +25,10 @@ const router = new Router({
     {
       path: '/login',
       name: 'Login',
-      component: Login
+      component: Login,
+      meta: {
+        title: 'Login'
+      }
     },
     {
       path: '/register',
@@ -43,7 +46,7 @@ const router = new Router({
       component: Dashboard,
       meta: {
         requiresAuth: true,
-        title: "Home",
+        title: 'Index',
       }
     },
     {
@@ -52,7 +55,7 @@ const router = new Router({
       component: Settings,
       meta: {
         requiresAuth: true,
-        title: "Settings",
+        title: 'Settings',
       }
     },
     {
@@ -61,7 +64,7 @@ const router = new Router({
       component: RatingCreate,
       meta: {
         requiresAuth: true,
-        title: "Create Rating",
+        title: 'Create Rating',
       }
     },
     {
@@ -69,7 +72,7 @@ const router = new Router({
       name: 'RatingDetail',
       component: RatingDetail,
       meta: {
-        title: "Rating"
+        title: 'Rating'
       }
     },
     {
@@ -77,7 +80,7 @@ const router = new Router({
       name: 'UserDetail',
       component: UserDetail,
       meta: {
-        title: "User Profile"
+        title: 'User Profile'
       }
     }
   ]
