@@ -7,7 +7,7 @@
       max-width="36"
       contain
     ></v-img>
-    <span>r8r</span>
+    <span class="app_title">R8R</span>
     <v-spacer></v-spacer>
     <v-btn to="/dashboard" text>
       <v-icon>mdi-home</v-icon>
@@ -57,3 +57,9 @@ export default {
   }
 };
 </script>
+
+<style scoped lang="scss">
+.app_title {
+  color: #FA7268;
+}
+</style>

@@ -1,8 +1,14 @@
 <template>
     <v-app-bar app dark class="hidden-sm-and-down">
+            <v-img
+                class="mx-2"
+                src="https://i.imgur.com/qgGY4tB.png"
+                max-height="36"
+                max-width="36"
+                contain></v-img>
         <v-toolbar-title>
         <v-btn to="/dashboard" text color="bg_coral" class="app_title">
-            <span class="mr-2">r8r</span>
+            <span>r8r</span>
         </v-btn>
         </v-toolbar-title>
         <v-spacer></v-spacer>
