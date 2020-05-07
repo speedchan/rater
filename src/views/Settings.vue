@@ -76,7 +76,7 @@
             </v-row>
             <v-row no-gutters class="text-center">
               <v-col cols="12">
-                <v-btn @click="update_user_profile" class="button mt-6" color="bg_coral" dark>Update Profile</v-btn>
+                <v-btn @click="update_user_profile" class="button mt-6" color="bg_coral" dark :loading="is_updating">Update Profile</v-btn>
               </v-col>
             </v-row>
           </v-container>
@@ -103,11 +103,14 @@ export default {
       new_profile_picture: null,
       is_show_new_profile_picture: false,
       upload_image_message: "",
-      country: ''
+      country: '',
+      is_updating: false
     };
   },
   methods: {
     update_user_profile() {
+      this.is_updating = true;
+      console.log(this.is_updating)
       this.$store.dispatch("update_user_profile", {
         full_name: this.current_user_profile.full_name,
         display_name:  this.current_user_profile.display_name,

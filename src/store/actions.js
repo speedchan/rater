@@ -18,7 +18,7 @@ export default {
       console.log("Error getting document:", error);
     });
   },
-  async update_user_profile({ commit, state }, data) {
+  update_user_profile({ commit, state }, data) {
     let full_name = data.full_name;
     let display_name = data.display_name;
     let country = data.country;
