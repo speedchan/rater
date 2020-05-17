@@ -9,12 +9,12 @@
                 <v-row no-gutters class="text-center left">
                     <v-row no-gutters>
                       <v-col cols="12" class="text-center b title">
-                        <span>R8R</span>
+                        <span>R8r</span>
                       </v-col>
                       <v-col cols="12" class="text-center overline">Welcome back, friend!</v-col>
                       <v-col cols="12" class="text-center">
                         <v-avatar size="250">
-                          <v-img :src='welcome_image'></v-img>
+                          <v-img :src='login_image'></v-img>
                         </v-avatar>
                       </v-col>
                       <v-col cols="12">
@@ -28,7 +28,7 @@
                         <v-text-field
                           prepend-icon="mdi-textbox-password"
                           v-model.trim="login_form.password"
-                          placeholder="Password (no restrictions)"
+                          placeholder="Password"
                           type="password"
                         ></v-text-field>
                       </v-col>
@@ -65,7 +65,7 @@
 const fb = require("../firebaseConfig.js");
 import firebase from "firebase";
 import RatingListCard from "../components/RatingListCard";
-import welcome_image from "../assets/images/undraw_Beer_celebration_cefj.png"
+import login_image from "../assets/images/login_image.png";
 
 export default {
   data() {
@@ -76,7 +76,7 @@ export default {
       },
       is_performing_request: false,
       error_message: "",
-      welcome_image: welcome_image
+      login_image: login_image
     };
   },
   methods: {

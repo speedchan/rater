@@ -190,11 +190,11 @@ export default {
   .dashboard_container {
     width: 100%;
   }
-.country_selector {
-  width: 425px;
-  height: 30px;
-  padding: 5px;
-  border-bottom: 1px solid grey;
-}
+  .country_selector {
+    width: 425px;
+    height: 30px;
+    padding: 5px;
+    border-bottom: 1px solid grey;
+  }
 }
 </style>
