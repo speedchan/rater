@@ -21,7 +21,11 @@
     },
     watch: {
       '$route' (to, from) {
-        document.title = "Comparater - " + to.meta.title || 'Comparater'
+        if (to.meta.title) {
+          document.title = `R8r - ${to.meta.title}`
+        } else {
+          document.title = "R8r - Rate your food!"
+        }
       }
     },
   };

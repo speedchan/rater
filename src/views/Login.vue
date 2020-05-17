@@ -26,7 +26,7 @@
                       </v-col>
                       <v-col cols="12">
                         <v-text-field
-                          prepend-icon="mdi-textbox-password"
+                          prepend-icon="mdi-lock"
                           v-model.trim="login_form.password"
                           placeholder="Password"
                           type="password"

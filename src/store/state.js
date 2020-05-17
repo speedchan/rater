@@ -11,6 +11,5 @@ export default {
   categories: [
     // Categories for ratings' category field
     { text: 'Food', value: 'food' },
-    { text: 'Food2', value: 'food2' }
   ],
 }

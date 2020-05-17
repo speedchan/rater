@@ -1,11 +1,8 @@
-import firebase from 'firebase';
+import firebase from 'firebase/app';
 import 'firebase/firestore';
-
-// The core Firebase JS SDK is always required and must be listed first
-// <script src="https://www.gstatic.com/firebasejs/7.8.1/firebase-app.js"></script>
-
-// TODO: Add SDKs for Firebase products that you want to use https://firebase.google.com/docs/web/setup#available-libraries
-//<script src="https://www.gstatic.com/firebasejs/7.8.1/firebase-analytics.js"></script>
+import 'firebase/database';
+import 'firebase/storage';
+import 'firebase/auth';
 
 
 // Your web app's Firebase configuration
@@ -22,7 +19,6 @@ const firebaseConfig = {
 
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
-// firebase.analytics();
 
 //Firebase utils
 const db = firebase.firestore();
@@ -30,7 +26,6 @@ const auth = firebase.auth();
 const currentUser = auth.currentUser;
 
 // Firebase collections
-// TODO Change to kebabz
 const usersCollection = db.collection('users');
 const ratingsCollection = db.collection('ratings');
 const setsCollection = db.collection('sets');
