@@ -1,4 +1,4 @@
-## r8r
+## R8r (Rater)
 #### R8 your food
 
 Allows users to save their personal ratings of food and drinks they have tried from different locations
