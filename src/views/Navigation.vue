@@ -2,7 +2,7 @@
     <v-app-bar app dark class="hidden-sm-and-down">
             <v-img
                 class="mx-2"
-                src="https://i.imgur.com/qgGY4tB.png"
+                src="../assets/images/icon.png"
                 max-height="36"
                 max-width="36"
                 contain></v-img>
