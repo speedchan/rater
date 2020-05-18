@@ -95,7 +95,7 @@ export default {
       is_searching: false,
       filtered_ratings: [],
       rating_points_dropdown: [
-        { text: "Between 1.0 and 2.1", value: 2 },
+        { text: "Between 1.0 and 2.0", value: 2 },
         { text: "Between 2.1 and 3.0", value: 3 },
         { text: "Between 3.1 and 4.0", value: 4 },
         { text: "Between 4.1 and 5.0", value: 5 }

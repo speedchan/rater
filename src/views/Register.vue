@@ -159,7 +159,8 @@ export default {
 
 @media (min-width: 576px) {
   .container {
-    width: 20vw;
+    min-width: 385px;
+    width: 385px;
     padding: 0;
   }
   .country_selector {

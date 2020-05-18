@@ -150,7 +150,7 @@
                           class="pr-md-8"
                         >
                         <p class="overline ratings_label">
-                          {{ format_rating_name_method(key) }}
+                          {{ key|format_rating_name }}
                         </p>
                         </v-slider>
                   </v-col>
@@ -379,9 +379,6 @@ export default {
           console.log("e400 Error in updating rating: ", err);
         });
     },
-    format_rating_name_method(rating_name) {
-      return rating_name.replace(/_/g, ' ').toUpperCase();
-    },
     open_image_picker() {
       this.$refs.rating_picture_input.click();
     },
@@ -506,9 +503,6 @@ export default {
 }
 .comment_mobile {
   width: 250px;
-}
-.asdf {
-  width: 10em;
 }
 
 /* Mobile */
