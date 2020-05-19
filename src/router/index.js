@@ -20,7 +20,6 @@ const router = new Router({
     {
       path: '*',
       redirect: '/'
-      // redirect: '/dashboard'
     },
     {
       path: '/login',
@@ -33,12 +32,20 @@ const router = new Router({
     {
       path: '/register',
       name: 'Register',
-      component: Register
+      component: Register,
+      meta: {
+        requiresAuth: false,
+        title: 'Register',
+      }
     },
     {
       path: '/forgot-password',
       name: 'ForgotPassword',
-      component: ForgotPassword
+      component: ForgotPassword,
+      meta: {
+        requiresAuth: false,
+        title: 'Forgot Password',
+      }
     },
     {
       path: '/',
