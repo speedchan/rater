@@ -13,7 +13,7 @@
                   <v-col cols="12" md="6" class="text-md-right text-center pr-md-7">
                     <v-avatar size="250" tile>
                       <v-img
-                        :src="user.profile_picture ? user.profile_picture : 'https://via.placeholder.com/150'"
+                        :src="user.profile_picture ? user.profile_picture : placeholder_image"
                       ></v-img>
                     </v-avatar>
                   </v-col>
@@ -92,6 +92,7 @@ const fb = require("../firebaseConfig.js");
 import { mapState } from "vuex";
 import moment from "moment";
 import RatingListCard from '../components/RatingListCard';
+import placeholder_image from "../assets/images/placeholder.svg"
 
 
 export default {  
@@ -104,7 +105,8 @@ export default {
       ratings_list: [],
       show_user_ratings: false,
       loading_user_ratings: false,
-      ratings_loaded: false
+      ratings_loaded: false,
+      placeholder_image: placeholder_image
     };
   },
   methods: {

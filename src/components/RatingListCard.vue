@@ -7,7 +7,7 @@
             <v-col cols="12">
               <v-avatar size="300" tile>
                 <v-img
-                  :src="rating.picture_url ? rating.picture_url : 'https://via.placeholder.com/150'"
+                  :src="rating.picture_url ? rating.picture_url : placeholder_image"
                 ></v-img>
               </v-avatar>
             </v-col>
@@ -59,7 +59,6 @@
                           color="bg_coral"
                           class="ratings"
                     ></v-rating>
-                    <!-- <v-rating class="ratings"></v-rating> -->
                   </v-col>
                 </v-col>
               </v-row>
@@ -106,10 +105,13 @@
 const fb = require("../firebaseConfig.js");
 import { mapState } from "vuex";
 import moment from "moment";
+import placeholder_image from "../assets/images/placeholder.svg"
 
 export default {
   data() {
-    return {};
+    return {
+      placeholder_image: placeholder_image
+    };
   },
   props: {
     rating: Object

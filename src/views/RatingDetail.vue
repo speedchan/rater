@@ -20,7 +20,7 @@
                   <v-col cols="12" md="5" class="text-center">
                     <v-avatar size="250" tile>
                       <v-img
-                        :src="rating.picture_url ? rating.picture_url : 'https://via.placeholder.com/150'"
+                        :src="rating.picture_url ? rating.picture_url : placeholder_image"
                       ></v-img>
                     </v-avatar>
                     <v-row no-gutters class="pt-2" v-if="is_edit">
@@ -270,12 +270,14 @@ import moment from "moment";
 import { mapState } from "vuex";
 import { v1 as uuidv1 } from "uuid";
 import VuePlaceAutocomplete from "vue-place-autocomplete";
+import placeholder_image from "../assets/images/placeholder.svg"
 
 Vue.use(VuePlaceAutocomplete);
 
 export default {
   data() {
     return {
+      placeholder_image: placeholder_image,
       google_places_api_key: process.env.VUE_APP_GOOGLE_PLACES_API_KEY,
       rating: null,
       cloned_rating: null,

@@ -14,7 +14,7 @@
                   <v-col cols="12" md="5" class="text-center">
                     <v-avatar size="250" tile>
                       <v-img
-                        :src="rating_data.picture_url ? rating_data.picture_url : 'https://via.placeholder.com/150'"
+                        :src="rating_data.picture_url ? rating_data.picture_url : placeholder_image"
                       ></v-img>
                     </v-avatar>
                     <v-row no-gutters class="pt-2">
@@ -45,6 +45,7 @@
                           prepend-icon="mdi-cube-outline"
                           dense
                           v-model="rating_data.name"
+                          placeholder="Rating name"
                         ></v-text-field>
                       </v-col>
                       <v-col cols="12" class="pt-1 text-capitalize">
@@ -80,6 +81,7 @@
                           rows="3"
                           row-height="12"
                           class="info_rows"
+                          placeholder="Add your comments/description here"
                         ></v-textarea>
                       </v-col>
                     </v-row>
@@ -149,12 +151,14 @@ import firebase from "firebase";
 
 import { v1 as uuidv1 } from "uuid";
 import VuePlaceAutocomplete from "vue-place-autocomplete";
+import placeholder_image from "../assets/images/placeholder.svg"
 
 Vue.use(VuePlaceAutocomplete);
 
 export default {
   data() {
     return {
+      placeholder_image: placeholder_image,
       google_places_api_key: process.env.VUE_APP_GOOGLE_PLACES_API_KEY,
       is_performing_request: false,
       rating_picture: null,
